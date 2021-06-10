@@ -4,17 +4,6 @@
 
 Integrating S1Seven services within your server application, such as a SAP module, an automated delivery note service, or any other application managing quality certificates, is accomplished with the S1Seven REST API.
 
-This reference includes operations for completing the full CASP life cycle, including:
-
-    Creating accounts
-    Adding participants to an account
-    Creating vaults
-    Depositing money into vaults
-    Withdrawing money from vaults
-    Managing keychains
-
-See the Unbound CASP User Guide for details about installing CASP.
-
 ## Swagger
 
 All endpoints documented here will link to a Swagger UI hosted by our staging webservices.
