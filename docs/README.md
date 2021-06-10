@@ -6,10 +6,8 @@
 
 | Name                      |
 | ------------------------- |
-| [Solution overview]       |
-| [general API information] |
+| [General API information] |
 | [API Flows]               |
 
-[solution overview]: ../overview/README.md
-[general api information]: ../information/README.md
+[general api information]: ../informations/README.md
 [api flows]: ../flows/README.md
