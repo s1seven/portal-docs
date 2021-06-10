@@ -1,0 +1,13 @@
+@startuml
+title Create Company
+skinparam style strictuml 
+participant Customer #FFFFFF
+participant S1Seven #FFFFFF
+participant "VAT Validation Service" as VAT #FFFFFF
+Customer -> S1Seven: Login
+Customer -> S1Seven: Enter the VAT_ID of company
+S1Seven -> VAT: Validate VAT_ID 
+VAT -> S1Seven: Return company data
+S1Seven -> Customer: Display company data
+Customer -> S1Seven: Confirm company data
+@enduml

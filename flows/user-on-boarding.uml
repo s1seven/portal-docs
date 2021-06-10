@@ -1,0 +1,10 @@
+@startuml
+title User Onboarding
+skinparam style strictuml 
+participant Customer #FFFFFF
+participant S1Seven #FFFFFF
+Customer -> S1Seven: Register with name, email and password
+S1Seven -> Customer: Send confirmation email
+Customer -> S1Seven: Confirm email address by clicking on link in email
+S1Seven -> Customer: Confirm successful account creation
+@enduml

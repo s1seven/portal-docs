@@ -1,0 +1,17 @@
+@startuml
+title Certificate Notarization
+skinparam style strictuml 
+participant Customer #FFFFFF
+participant SAP #FFFFFF
+participant S1Seven #FFFFFF
+participant BigChainDB #FFFFFF
+Customer -> S1Seven: Send certificate to notarize
+S1Seven -> S1Seven: Validate the certificate
+S1Seven -> S1Seven: Trigger a background job
+S1Seven -> SAP: Return background job Id or errors
+S1Seven -> S1Seven: Process and sign the certificate's transaction
+S1Seven -> BigChainDB: Send the signed transaction 
+BigChainDB -> S1Seven: Return the signed transaction 
+S1Seven -> SAP: Send webhooks to registered url(s)
+S1Seven -> Customer: Send an email containing the status of the job
+@enduml

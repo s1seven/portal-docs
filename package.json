@@ -1,0 +1,26 @@
+{
+  "name": "portal-docs",
+  "version": "0.0.1",
+  "description": "S1Seven platform docs",
+  "main": "index.js",
+  "scripts": {
+    "docs:compose": "node ./compose.js",
+    "docs:dev": "npm run docs:compose && vuepress dev docs",
+    "docs:build": "npm run docs:compose && vuepress build docs",
+    "docs:deploy": "./deploy.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s1seven/portal-docs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s1seven/portal-docs/issues"
+  },
+  "homepage": "https://github.com/s1seven/portal-docs#readme",
+  "devDependencies": {
+    "vuepress": "^1.8.2"
+  }
+}

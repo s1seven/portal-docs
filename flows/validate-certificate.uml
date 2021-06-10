@@ -1,0 +1,15 @@
+@startuml
+title Certificate Validation
+skinparam style strictuml 
+participant Customer #FFFFFF
+participant SAP #FFFFFF
+participant S1Seven #FFFFFF
+participant Schemas_server #FFFFFF
+SAP -> S1Seven: Check supported schemas
+S1Seven -> Schemas_server: Check the list of available schemas
+Schemas_server -> S1Seven: Return the list of available schemas
+S1Seven -> SAP: Returned filtered list of supported schemas
+Customer -> SAP: Create the JSON certificate
+SAP -> S1Seven: Send the certificate for validation
+S1Seven -> Customer: Return certificate or list of errors
+@enduml
