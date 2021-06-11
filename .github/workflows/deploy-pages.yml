@@ -15,6 +15,7 @@ jobs:
       - name: Build and Deploy
         uses: rreichel3/vuepress-github-actions-deploy@master
         env:
+          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BUILD_DIR: docs/.vuepress/dist
           BUILD_SCRIPT: npm install && npm run docs:build
           PAGES_CNAME: docs.s1seven.io
