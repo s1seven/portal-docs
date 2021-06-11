@@ -51,7 +51,6 @@ const copyDir = (src, dest) => {
   const folders = ['informations', 'flows'];
   const docsPath = './docs';
   const files = [
-    { input: 'README.md', output: `${docsPath}/README.md` },
     { input: 'logo.png', output: `${docsPath}/.vuepress/public/logo.png` },
     {
       input: 'favicon.ico',
