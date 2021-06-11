@@ -8,7 +8,7 @@ The following description details how S1Seven can notarize companies material ce
 
 ### Create a wallet
 
-A wallet allows a company to generate key pairs to sign document and transactions on the blockchain, it is composed by a mnemmonic phrase that is the root of all key pairs.
+A wallet allows a company to generate key pairs to sign document and transactions on the blockchain, it is composed by a mnemonic phrase that is the root of all key pairs.
 
 1. To create a new wallet you can call the [create wallet] endpoint. You should also set the `company` HTTP header with the company's Id you previously created.
 

@@ -64,7 +64,7 @@ The API prefix for all S1Seven REST endpoints is:
 
 or
 
-`https://<s1seven-proxy>/<service>/<resources>`
+`https://<s1seven-proxy>/<service>/<service_resources>`
 
 The expected value for `<service>` is the name of the service, such as auth-service, user-service, km-service, certificate-service, pipe-service.
 
