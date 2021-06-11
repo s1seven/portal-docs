@@ -7,7 +7,6 @@
     "docs:compose": "node ./compose.js",
     "docs:dev": "npm run docs:compose && vuepress dev docs",
     "docs:build": "npm run docs:compose && vuepress build docs",
-    "docs:deploy": "./deploy.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
