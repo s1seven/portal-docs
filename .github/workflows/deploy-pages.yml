@@ -1,0 +1,20 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Build and Deploy
+        uses: rreichel3/vuepress-github-actions-deploy@master
+        env:
+          BUILD_DIR: docs/.vuepress/dist
+          BUILD_SCRIPT: npm install && npm run docs:build
+          PAGES_CNAME: docs.s1seven.io
