@@ -14,8 +14,9 @@ A wallet allows a company to generate key pairs to sign document and transaction
 
 The body content is optional.
 
-Note:
+::: danger
 The `mnemonic` that will be returned should be stored with extra care, as it will be displayed only once and it allows to recreate key pairs used to sign transactions directly on the blockhain.
+:::
 
 ### Create a first identity
 
@@ -51,6 +52,8 @@ You should set several parameters:
 #### Minimal webhook server
 
 Create a file `webhook-server.js` with this content, it will start an HTTP server on port 9000.
+
+::: details Node.js example
 
 ```js
 import { createHmac } from 'crypto';
@@ -125,6 +128,8 @@ function startServer(API_SECRET) {
 })(process.argv);
 ```
 
+:::
+
 Start the server with :
 
 ```sh
@@ -132,6 +137,8 @@ node ./webhook-server.js <secret_returned_by_create_hook_endpoint>
 ```
 
 Create a `local-tunnel.js` file, it will start a tunnel to redirect HTTP calls to `https://<my_subdomain>.loca.lt` (it should match the `connectionUrl` declared during hook registration) to your local webhook server. Alternatively you can also use `Ngrok`.
+
+::: details Node.js HTTP tunnel example
 
 ```js
 import localtunnel from 'localtunnel';
@@ -150,6 +157,8 @@ import localtunnel from 'localtunnel';
   });
 })(process.argv);
 ```
+
+:::
 
 Start the tunnel with your custom subdomain :
 
@@ -203,7 +212,9 @@ If you registered a hook with the `scopes` list containing
 
 you will also receive the payload on your registered HTTP endpoint (`connectionUrl`).
 
-Note: We are currently studying another approach to get information about the background job status by polling a new dedicated endpoint.
+::: tip
+We are currently studying another approach to get information about the background job status by polling a new dedicated endpoint.
+:::
 
 ### Verify a certificate
 

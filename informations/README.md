@@ -70,6 +70,8 @@ The expected value for `<service>` is the name of the service, such as auth-serv
 
 The list of valid resources and actions per service :
 
+::: details The list of valid resources and actions per service :
+
 ```json
   "auth-service" : {
     "auth": {
@@ -127,6 +129,8 @@ The list of valid resources and actions per service :
     }
   },
 ```
+
+:::
 
 ## Error Handling
 
@@ -186,6 +190,10 @@ curl --request GET \
   <img src="./create-access-token.png">
 </p>
 
+::: tip
+The access token is restricted to a company resources and a mode.
+:::
+
 For applications or scripts that require long term access, an access token key with a one-year time limit can be created by calling the [create accesstoken] operation and setting the companyId, the mode and the scopes (which action on which resource) that this token will grant access to.
 
 The returned JWT must be added to the authorization header (as a bearer token) for every REST call. The Admin can generate several API keys for different app usages.
@@ -203,7 +211,7 @@ curl --request POST \
   }'
 ```
 
-- Example scopes
+::: details Example Scopes
 
 ```json
 {
@@ -246,11 +254,11 @@ curl --request POST \
 }
 ```
 
-Note:
+:::
 
-- The access token is restricted to a company resources and a mode.
-
-- The access token (`jwt` property in the response) should be stored safely as it is available for 1 year.
+::: warning
+The access token (`jwt` property in the response) should be stored safely as it is available for 1 year.
+:::
 
 ### Token Usage
 
@@ -280,8 +288,9 @@ The header field has the format:
 4. Retrieve user information with [me] endpoint
 5. You can call the [refresh token] endpoint with the `Refresh` HTTP header value set to `refreshToken` returned above, to create a new `accessToken` once it has expired or call the [login] endpoint.
 
-Note:
+::: warning
 The `refreshToken` should be stored safely as it is available for 60 days.
+:::
 
 ### Register a company
 
