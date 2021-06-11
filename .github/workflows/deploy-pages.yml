@@ -34,7 +34,7 @@ jobs:
 
       - name: Install and Build
         run: |
-          npm run ci
+          npm ci
           npm run doc:build
 
       - name: Deploy 🚀
