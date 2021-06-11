@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/s1seven/portal-docs#readme",
   "devDependencies": {
+    "axios": "^0.21.1",
     "vuepress": "^1.8.2"
   }
 }
