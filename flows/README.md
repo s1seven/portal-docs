@@ -3,93 +3,10 @@
 [[toc]]
 
 The following description details how S1Seven can notarize companies material certificates.
-It assumes that no user and/or companies have been registered yet, so every prerequisite will be described in the following sections.
 
-## Register user
+## Key management flow
 
-<p align="left">
-  <img src="./user-registration.png">
-</p>
-
-1. A new user can be registered using the [create user] endpoint.
-2. If you need to resend the verification email, use [verify email] endpoint.
-3. Once you confirmed the user creation, you can [login], if successful it will return an `accessToken` and `refreshToken` that can be used in `Authorization` and `Refresh` HTTP headers to authenticate the next calls to our services. Those values will also be set in cookies.
-4. Retrieve user information with [me] endpoint
-5. You can call the [refresh token] endpoint with the `Refresh` HTTP header value set to `refreshToken` returned above, to create a new `accessToken` once it has expired or call the [login] endpoint.
-
-Note:
-The `refreshToken` should be stored safely as it is available for 60 days.
-
-## Register a company
-
-<p align="left">
-  <img src="./create-company.png">
-</p>
-
-1. [login]
-2. A new company can be registered using the [create company] endpoint.
-3. Once created you can get the list of the user's companies with the [me] endpoint.
-
-## Create an access token
-
-<p align="left">
-  <img src="./create-accesstoken.png">
-</p>
-
-The best way to authenticate when using directly the API is with a long live access token.
-
-1. To generate a long lived token, you can use the [create accesstoken] endpoint. You should also set the `company` HTTP header with the company's Id you previously created and set the scope (which action on which resource) that this token will grant access to.
-
-- Example scopes
-
-```json
-{
-  "auth": {
-    "actions": ["read_one"]
-  },
-  "cointypes": {
-    "actions": ["read_one", "read_many"]
-  },
-  "nodes": {
-    "actions": ["read_one", "read_many"]
-  },
-  "wallet": {
-    "actions": ["read_one"]
-  },
-  "identities": {
-    "actions": ["read_one", "read_many"]
-  },
-  "transactions": {
-    "actions": ["sign", "send", "read_one"]
-  },
-  "companies": {
-    "actions": ["read_one", "update_one"]
-  },
-  "certificates": {
-    "actions": ["read_one", "validate_one", "notarize_one"]
-  },
-  "hooks": {
-    "actions": ["create_one", "read_one", "read_many"]
-  },
-  "events": {
-    "actions": ["read_one", "read_many"]
-  },
-  "mailhooks": {
-    "actions": ["create_one", "read_one", "read_many"]
-  },
-  "mails": {
-    "actions": ["read_one", "read_many"]
-  }
-}
-```
-
-Note:
-
-- The access token is restricted to a company resources and a mode.
-
-- The access token (`jwt` property in the response) should be stored safely as it is available for 1 year.
-
-## Create a wallet
+### Create a wallet
 
 A wallet allows a company to generate key pairs to sign document and transactions on the blockchain, it is composed by a mnemmonic phrase that is the root of all key pairs.
 
@@ -100,7 +17,7 @@ The body content is optional.
 Note:
 The `mnemonic` that will be returned should be stored with extra care, as it will be displayed only once and it allows to recreate key pairs used to sign transactions directly on the blockhain.
 
-## Create a first identity
+### Create a first identity
 
 The identities contains metadata that allows our service to create keypairs without exposing or storing their private parts. Each identity gives the path to one specific keypair that you will use in a later step to notarize certificates.
 
@@ -123,13 +40,15 @@ You should set several parameters:
 }
 ```
 
-## Register a HTTP webhook
+## Event listeners flow
+
+### Register a HTTP webhook
 
 1. To subscribe and react to events sent from our services, you can use [register hook] endpoint. You should also set the `company` HTTP header with the company's Id you previously created and set the scope (which action on which resource) that this hook will listen to.
 
-## Handle webhooks
+### Handle webhooks
 
-### Minimal webhook server
+#### Minimal webhook server
 
 Create a file `webhook-server.js` with this content, it will start an HTTP server on port 9000.
 
@@ -238,7 +157,9 @@ Start the tunnel with your custom subdomain :
 node ./local-tunnel.js <my_subdomain>
 ```
 
-## Validate a certificate
+## Notarization flow
+
+### Validate a certificate
 
 <p align="left">
   <img src="./certificate-validation.png">
@@ -248,13 +169,13 @@ node ./local-tunnel.js <my_subdomain>
 
 2. Validate your certificate either by passing the json or the file (multipart/form-data) in the Http body with [validate json certificate] or [validate file certificate] endpoints.
 
-## Render a certificate
+### Render a certificate
 
 1. You can render the certificate as HTML or PDF either by passing the json or the file (multipart/form-data) in the body with [render json certificate] or [render file certificate] endpoints.
 
 You should set the `type` HTTP query with `html` or `pdf`
 
-## Notarize a certificate
+### Notarize a certificate
 
 <p align="left">
   <img src="./certificate-notarization.png">
@@ -284,17 +205,10 @@ you will also receive the payload on your registered HTTP endpoint (`connectionU
 
 Note: We are currently studying another approach to get information about the background job status by polling a new dedicated endpoint.
 
-## Verify a certificate
+### Verify a certificate
 
 You can verify that a certificate has been notarized by uploading a file to the [verify certificate] endpoint. You must also provide the mode on which this certificate has been notarized by setting the HTTP query `mode=<expected_mode>`.
 
-[create user]: https://app.s1seven.dev/users-service/api/#/users/UsersController_create
-[verify email]: https://app.s1seven.dev/users-service/api/#/users/UsersController_sendConfirmationEmail
-[login]: https://app.s1seven.dev/auth-service/api/#/auth/AuthController_login
-[me]: https://app.s1seven.dev/users-service/api/#/users/UsersController_findMe
-[refresh token]: https://app.s1seven.dev/auth-service/api/#/auth/AuthController_refresh
-[create company]: https://app.s1seven.dev/users-service/api/#/companies/CompaniesController_create
-[create accesstoken]: https://app.s1seven.dev/auth-service/api/#/accesstoken/AccessTokensController_create
 [create wallet]: https://app.s1seven.dev/km-service/api/#/wallet/WalletsController_create
 [create identity]: https://app.s1seven.dev/km-service/api/#/identities/IdentitiesController_create
 [register hook]: https://app.s1seven.dev/pipe-service/api/#/hooks/HooksController_create

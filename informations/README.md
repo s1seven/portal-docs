@@ -1,12 +1,12 @@
 # General API information
 
-[[toc]]
-
 Integrating S1Seven services within your server application, such as a SAP module, an automated delivery note service, or any other application managing quality certificates, is accomplished with the S1Seven REST API.
+
+[[toc]]
 
 ## Swagger
 
-All endpoints documented here will link to a Swagger UI hosted by our staging webservices.
+All endpoints documented here will link to a Swagger UI hosted on our staging webservices allowing you to try the API with the closest conditions from production systems.
 
 1. On the top left, select the server address matching the address of the Swagger you are currently browsing.
 
@@ -31,6 +31,8 @@ The user service is responsible for all CRUD operations related to user resource
 Click [here](https://km-test.s1seven.dev/api) to open the Key Management service APIs.
 
 The KM service allows to manage resources related to crypto operations such as wallets, identities, transactions.
+
+This service is deployed on 2 addresses to distinguish two modes, `test` and `live`. The access to `live` requires a subscription and is only available in production enviroment, whereas the `test` mode allows to try our services without the risk of losing sensitive information.
 
 ### Certificate service
 
@@ -58,9 +60,73 @@ You can register webhooks or create email subscriptions to watch changes on sele
 
 The API prefix for all S1Seven REST endpoints is:
 
-`https://<s1seven-proxy>/<service>`
+`https://<s1seven-proxy>/<service_resources>`
 
-The value for `<service>` is the name of the service, such as auth-service, user-service, km-service, certificate-service, pipe-service.
+or
+
+`https://<s1seven-proxy>/<service>/<resources>`
+
+The expected value for `<service>` is the name of the service, such as auth-service, user-service, km-service, certificate-service, pipe-service.
+
+The list of valid resources and actions per service :
+
+```json
+  "auth-service" : {
+    "auth": {
+      "actions": ["read_one", "create_one", "revoke"]
+    },
+    "sessions": {
+      "actions": ["read_many", "delete_one", "delete_all"]
+    },
+    "accesstoken": {
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
+    }
+  },
+  "user-service" : {
+    "users": {
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
+    },
+    "companies": {
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
+    }
+  },
+  "km-service" : {
+    "cointypes": {
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
+    },
+    "nodes": {
+      "actions": ["read_many", "create_one", "update_one", "delete_one"]
+    },
+    "wallets": {
+      "actions": ["read_one", "create_one", "update_one", "delete_one"]
+    },
+    "identities": {
+      "actions": ["read_one", "read_many", "create_one"]
+    },
+    "transactions": {
+      "actions": ["read_one", "read_many", "sign", "send"]
+    }
+  },
+  "certificate-service" : {
+    "certificates": {
+      "actions": ["read_one", "validate_one", "notarize_one"]
+    }
+  },
+  "pipe-service" : {
+    "hooks": {
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
+    },
+    "events": {
+      "actions": ["read_one", "read_many", "update_one"]
+    },
+    "mailhooks": {
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one", "validate_one"]
+    },
+    "mails": {
+      "actions": ["read_one", "read_many", "update_one"]
+    }
+  },
+```
 
 ## Error Handling
 
@@ -68,7 +134,7 @@ Responses are formatted in the standard REST format, with a status field showing
 
 For example, here is the response for a failed login request:
 
-`https://<s1seven-proxy>/auth-service/login`
+`https://<s1seven-proxy>/auth/login`
 
 ```json
 {
@@ -78,3 +144,159 @@ For example, here is the response for a failed login request:
   "message": "Wrong credentials provided"
 }
 ```
+
+## Authentication
+
+Most endpoints require authentication to submit a request to the S1Seven servers. The API reference for each endpoint specifies the types of authentication needed to access the endpoint.
+
+S1Seven uses username/password and access tokens to add a layer of security to the API requests from users.
+
+### Username and Password
+
+For short term access, such as for the web UI, the user can use a username and password to generate an access token that is valid for 15 minutes and a refresh token that is valid for 60 days by calling the [login] endpoint. The access token must be added to the authorization header (as a bearer token) to every REST call.
+
+The following code samples show the types of authentication that can be used with this endpoint.
+
+```sh
+curl --request POST \
+  --url https://<auth-server>/auth/login \
+  --header 'content-type: application/json' \
+  --data '{
+    "username":"so",
+    "password":"password"
+  }'
+```
+
+### Refresh the token
+
+Once you have an access token, you can use the [refresh token] endpoint to refresh the token.
+
+This is an example of refreshing the token:
+
+```sh
+curl --request GET \
+ --url https://<auth-server>/auth/refresh \
+ --header 'content-type: application/json' \
+ --header 'refresh: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6' \
+```
+
+### Long lived access token
+
+<p align="left">
+  <img src="./create-access-token.png">
+</p>
+
+For applications or scripts that require long term access, an access token key with a one-year time limit can be created by calling the [create accesstoken] operation and setting the companyId, the mode and the scopes (which action on which resource) that this token will grant access to.
+
+The returned JWT must be added to the authorization header (as a bearer token) for every REST call. The Admin can generate several API keys for different app usages.
+
+```sh
+curl --request POST \
+ --url https://<auth-server>/accesstoken?mode=test \
+ --header 'content-type: application/json' \
+ --header 'company: 30e44fef-3858-4fc4-92ec-77ae50619a80' \
+ --header 'authorization: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6' \
+ --data '{
+    "auth": {
+      "actions": ["read_one"]
+    },
+  }'
+```
+
+- Example scopes
+
+```json
+{
+  "auth": {
+    "actions": ["read_one"]
+  },
+  "cointypes": {
+    "actions": ["read_one", "read_many"]
+  },
+  "nodes": {
+    "actions": ["read_one", "read_many"]
+  },
+  "wallet": {
+    "actions": ["read_one"]
+  },
+  "identities": {
+    "actions": ["read_one", "read_many"]
+  },
+  "transactions": {
+    "actions": ["sign", "send", "read_one"]
+  },
+  "companies": {
+    "actions": ["read_one", "update_one"]
+  },
+  "certificates": {
+    "actions": ["read_one", "validate_one", "notarize_one"]
+  },
+  "hooks": {
+    "actions": ["create_one", "read_one", "read_many"]
+  },
+  "events": {
+    "actions": ["read_one", "read_many"]
+  },
+  "mailhooks": {
+    "actions": ["create_one", "read_one", "read_many"]
+  },
+  "mails": {
+    "actions": ["read_one", "read_many"]
+  }
+}
+```
+
+Note:
+
+- The access token is restricted to a company resources and a mode.
+
+- The access token (`jwt` property in the response) should be stored safely as it is available for 1 year.
+
+### Token Usage
+
+Once you have an access token, you can call endpoints using it, such as:
+
+```sh
+curl --request GET \
+--url http://<user-service>/companies/30e44fef-3858-4fc4-92ec-77ae50619a80 \
+--header 'authorization: Bearer dXNlcjExMTE6c1hH5TIErm63+FoOVz4M+y/PDG9aV+qvWlV4MTEraWMhFVmyzEa8/S4YrLtFmUE8VJZzDvdG4vDY6NWRmYWQwN2EtODgyMi00NzM0LTg4NTMtYjA4YjhkNTc0ZTYx'
+```
+
+The header field has the format:
+
+`--header 'authorization: Bearer <token>'`
+
+## Common requests
+
+### Register user
+
+<p align="left">
+  <img src="./user-registration.png">
+</p>
+
+1. A new user can be registered using the [create user] endpoint.
+2. If you need to resend the verification email, use [verify email] endpoint.
+3. Once you confirmed the user creation, you can [login], if successful it will return an `accessToken` and `refreshToken` that can be used in `Authorization` and `Refresh` HTTP headers to authenticate the next calls to our services. Those values will also be set in cookies.
+4. Retrieve user information with [me] endpoint
+5. You can call the [refresh token] endpoint with the `Refresh` HTTP header value set to `refreshToken` returned above, to create a new `accessToken` once it has expired or call the [login] endpoint.
+
+Note:
+The `refreshToken` should be stored safely as it is available for 60 days.
+
+### Register a company
+
+<p align="left">
+  <img src="./create-company.png">
+</p>
+
+1. [login]
+2. A new company can be registered using the [create company] endpoint.
+3. Once created you can get the list of the user's companies with the [me] endpoint.
+
+[create user]: https://app.s1seven.dev/users-service/api/#/users/UsersController_create
+[verify email]: https://app.s1seven.dev/users-service/api/#/users/UsersController_sendConfirmationEmail
+[login]: https://app.s1seven.dev/auth-service/api/#/auth/AuthController_login
+[me]: https://app.s1seven.dev/users-service/api/#/users/UsersController_findMe
+[refresh token]: https://app.s1seven.dev/auth-service/api/#/auth/AuthController_refresh
+[create company]: https://app.s1seven.dev/users-service/api/#/companies/CompaniesController_create
+[create accesstoken]: https://app.s1seven.dev/auth-service/api/#/accesstoken/AccessTokensController_create

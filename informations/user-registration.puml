@@ -1,5 +1,5 @@
 @startuml
-title User Onboarding
+title User Registration
 skinparam style strictuml 
 participant Customer #FFFFFF
 participant S1Seven #FFFFFF

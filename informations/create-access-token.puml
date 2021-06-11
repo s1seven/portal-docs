@@ -1,0 +1,14 @@
+@startuml
+title Create Access Token
+skinparam style strictuml 
+participant Custom_app #FFFFFF
+participant Customer #FFFFFF
+participant S1Seven #FFFFFF
+Customer -> S1Seven: Login
+Customer -> S1Seven: Create access token with permissions
+Customer -> Custom_app: Store service URL
+Customer -> Custom_app: Store access token
+Customer -> Custom_app: Trigger connection test
+Custom_app -> S1Seven: Execute connection test
+Custom_app -> S1Seven: Send test certificates
+@enduml
