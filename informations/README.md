@@ -193,7 +193,7 @@ This is an example of refreshing the token:
 curl --request GET \
  --url https://<auth-server>/auth/refresh \
  --header 'content-type: application/json' \
- --header 'refresh: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6' \
+ --header 'refresh: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6'
 ```
 
 ### Long lived access token
@@ -219,7 +219,7 @@ curl --request POST \
  --data '{
     "auth": {
       "actions": ["read_one"]
-    },
+    }
   }'
 ```
 
