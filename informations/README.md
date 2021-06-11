@@ -68,8 +68,6 @@ or
 
 The expected value for `<service>` is the name of the service, such as auth-service, user-service, km-service, certificate-service, pipe-service.
 
-The list of valid resources and actions per service :
-
 ::: details The list of valid resources and actions per service :
 
 ```json
@@ -171,6 +169,20 @@ curl --request POST \
   }'
 ```
 
+### Access Token Usage
+
+Once you have an access token, you can call endpoints using it, such as:
+
+```sh
+curl --request GET \
+--url http://<user-service>/companies/30e44fef-3858-4fc4-92ec-77ae50619a80 \
+--header 'authorization: Bearer dXNlcjExMTE6c1hH5TIErm63+FoOVz4M+y/PDG9aV+qvWlV4MTEraWMhFVmyzEa8/S4YrLtFmUE8VJZzDvdG4vDY6NWRmYWQwN2EtODgyMi00NzM0LTg4NTMtYjA4YjhkNTc0ZTYx'
+```
+
+The header field has the format:
+
+`--header 'authorization: Bearer <token>'`
+
 ### Refresh the token
 
 Once you have an access token, you can use the [refresh token] endpoint to refresh the token.
@@ -259,20 +271,6 @@ curl --request POST \
 ::: warning
 The access token (`jwt` property in the response) should be stored safely as it is available for 1 year.
 :::
-
-### Token Usage
-
-Once you have an access token, you can call endpoints using it, such as:
-
-```sh
-curl --request GET \
---url http://<user-service>/companies/30e44fef-3858-4fc4-92ec-77ae50619a80 \
---header 'authorization: Bearer dXNlcjExMTE6c1hH5TIErm63+FoOVz4M+y/PDG9aV+qvWlV4MTEraWMhFVmyzEa8/S4YrLtFmUE8VJZzDvdG4vDY6NWRmYWQwN2EtODgyMi00NzM0LTg4NTMtYjA4YjhkNTc0ZTYx'
-```
-
-The header field has the format:
-
-`--header 'authorization: Bearer <token>'`
 
 ## Common requests
 
