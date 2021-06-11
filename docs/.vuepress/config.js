@@ -2,14 +2,16 @@ const pkg = require('../../package.json');
 
 module.exports = {
   title: 'S1Seven Developers guide',
-  // base: `/${pkg.name}/`,
   base: `/${pkg.name}${process.env.notifyBCDocVersion_PATH || '/'}`,
   description: pkg.description,
   head: [
-    ['meta', {name: 'theme-color', content: '#3eaf7c'}],
-    ['meta', {name: 'apple-mobile-web-app-capable', content: 'yes'}],
-    ['meta', {name: 'apple-mobile-web-app-status-bar-style', content: 'black'}],
-    ['link', {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}],
+    ['meta', { name: 'theme-color', content: '#3eaf7c' }],
+    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    [
+      'meta',
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
+    ],
+    ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     [
       'link',
       {

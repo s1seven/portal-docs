@@ -1,5 +1,6 @@
 ---
 home: true
+title: S1Seven Developers guide
 metaTitle: S1Seven Developers guide
 description: Documentation for webservices REST API
 heroImage: /logo.png
