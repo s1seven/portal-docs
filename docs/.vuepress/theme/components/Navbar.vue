@@ -32,7 +32,7 @@
 import SearchBox from '@SearchBox';
 import SidebarButton from '@theme/components/SidebarButton.vue';
 import NavLinks from '@theme/components/NavLinks.vue';
-import Versions from '../../components/versions.vue';
+import Versions from '../../components/Versions.vue';
 
 export default {
   name: 'Navbar',
