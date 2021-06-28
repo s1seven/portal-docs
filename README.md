@@ -9,5 +9,5 @@
 | [General API information] |
 | [API Flows]               |
 
-[general api information]: ../informations/README.md
-[api flows]: ../flows/README.md
+[general api information]: ./informations/README.md
+[api flows]: ./flows/README.md
