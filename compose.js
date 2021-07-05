@@ -57,8 +57,8 @@ const copyDir = (src, dest) => {
       output: `${docsPath}/.vuepress/public/favicon.ico`,
     },
     {
-      input: 'openapi.yaml',
-      output: `${docsPath}/.vuepress/public/specs/openapi.yaml`,
+      input: 'openapi.json',
+      output: `${docsPath}/.vuepress/public/specs/openapi.json`,
     },
   ];
 

@@ -7,7 +7,6 @@
 
 <script>
 import axios from 'axios';
-import yaml from 'js-yaml';
 import { saveAs } from 'file-saver';
 import SwaggerUI from 'swagger-ui';
 import 'swagger-ui/dist/swagger-ui.css';
@@ -57,16 +56,14 @@ export default {
       this.commonSchemasContent = await this.findCommonSchemas(commonSchemas);
     },
     async loadSwagger() {
-      // const { servers = [] } = this.$themeConfig;
-      const composedNameSpec = `${this.converPagePathToSpecFilename()}.yaml`;
+      const composedNameSpec = `${this.convertPagePathToSpecFilename()}.json`;
       try {
         const { data } = await axios.get(this.fileUrl(composedNameSpec));
-        const spec = yaml.load(this.replaceYamlReferences(data));
+        const spec = data;
         this.finalSpec = this.mixCommonSchemas(spec, this.commonSchemasContent);
-        this.finalSpecName = `${this.converPagePathToSpecFilename()}.json`;
+        this.finalSpecName = `${this.convertPagePathToSpecFilename()}.json`;
         SwaggerUI({
           spec,
-          // spec: { ...spec, servers: servers.map((url) => ({ url })) },
           domNode: this.$el.querySelector(`.${this.baseClass}`),
           persistAuthorization: true,
         });
@@ -77,7 +74,7 @@ export default {
         console.warn('Spec file not  found:', this.fileUrl(composedNameSpec));
       }
     },
-    converPagePathToSpecFilename() {
+    convertPagePathToSpecFilename() {
       return this.page.regularPath
         .split('/')
         .filter((item) => !!item)
@@ -115,26 +112,6 @@ export default {
           spec.components.schemas[typeName] = schema;
         });
       return spec;
-    },
-    replaceYamlReferences(yaml) {
-      let replacedYAML = yaml;
-      let match;
-      const yamlReferences = [];
-      while ((match = typeReferenceRegExpr.exec(replacedYAML))) {
-        const [line, typePath] = match;
-        const [type] = typePath.split('/').reverse();
-        const replacedLine = line.replace(typePath, this.createTypeReference(type));
-        replacedYAML = replacedYAML.replace(line, replacedLine);
-        yamlReferences.push(type);
-      }
-      this.typesReferenced = yamlReferences.map(this.removeLastQuotes);
-      return replacedYAML;
-    },
-    createTypeReference(typeName) {
-      return `"#/components/schemas/${typeName}`;
-    },
-    removeLastQuotes(str) {
-      return str.replace('"', '');
     },
   },
 };

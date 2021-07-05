@@ -1,7 +1,6 @@
 const SwaggerParser = require('@apidevtools/swagger-parser');
 const axios = require('axios');
 const { promises: fs } = require('fs');
-const { dump } = require('js-yaml');
 const { merge } = require('openapi-merge');
 
 async function mergeAPIs(openApis) {
@@ -44,10 +43,11 @@ async function mergeAPIs(openApis) {
         spec: false,
       },
     });
-    const yamlOpenAPI = dump(openApi);
-    await fs.writeFile(`./openapi.yaml`, yamlOpenAPI);
+    await fs.writeFile(`./openapi.json`, JSON.stringify(openApi, null, 2));
   } catch (e) {
-    console.log(e.toJSON());
+    if (typeof e.toJSON === 'function') {
+      console.warn(e.toJSON());
+    }
     throw e;
   }
 }
