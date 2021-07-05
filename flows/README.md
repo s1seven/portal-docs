@@ -6,16 +6,18 @@ The following description details how S1Seven can notarize companies material ce
 
 ## Key management flow
 
+TODO: add flow diagram showing wallet -> identities -> key pairs -> transactions -> blockchain interactions
+
 ### Create a wallet
 
-A wallet allows a company to generate key pairs to sign document and transactions on the blockchain, it is composed by a mnemonic phrase that is the root of all key pairs.
+A wallet allows a company to generate key pairs to sign document and transactions for supported blockchains, it is composed by a mnemonic phrase that is the root of all key pairs.
 
 1. To create a new wallet you can call the [create wallet] endpoint. You should also set the `company` HTTP header with the company's Id you previously created.
 
 The body content is optional.
 
 ::: danger
-The `mnemonic` that will be returned should be stored with extra care, as it will be displayed only once and it allows to recreate key pairs used to sign transactions directly on the blockhain.
+The `mnemonic` that will be returned should be stored with extra care, as it will be displayed only once and it allows to recreate key pairs used to sign transactions that can be sent directly to the blockhain node.
 :::
 
 ### Create a first identity
@@ -41,11 +43,31 @@ You should set several parameters:
 }
 ```
 
+### Sign a transaction
+
+TODO
+
+### Send a transaction to a DLT
+
+TODO
+
 ## Event listeners flow
 
 ### Register a HTTP webhook
 
 1. To subscribe and react to events sent from our services, you can use [register hook] endpoint. You should also set the `company` HTTP header with the company's Id you previously created and set the scope (which action on which resource) that this hook will listen to.
+
+### Find webhooks
+
+TODO
+
+### Find events
+
+TODO
+
+### Retry event delivery
+
+TODO
 
 ### Handle webhooks
 
@@ -98,13 +120,15 @@ function startServer(API_SECRET) {
   app.use(
     express.json({
       verify: (req, res, buffer) => {
-        (req as any).rawBody = buffer;
+        req.rawBody = buffer;
       },
     })
   );
 
   app.post('/', (req, res) => {
     const body = serializeBody(req.body);
+    // or 
+    const body = req.rawBody.toString();
     const signature = generateSignature(
       req.headers['signature'],
       body,
@@ -213,7 +237,7 @@ If you registered a hook with the `scopes` list containing
 you will also receive the payload on your registered HTTP endpoint (`connectionUrl`).
 
 ::: tip
-We are currently studying another approach to get information about the background job status by polling a new dedicated endpoint.
+If accessing the email accounts and setting a webhook server are not available options, it's still possible to poll the `verify` endpoint and wait for a successful response.
 :::
 
 ### Verify a certificate

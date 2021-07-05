@@ -6,7 +6,7 @@ Integrating S1Seven services within your server application, such as a SAP modul
 
 ## Swagger
 
-All endpoints documented here will link to a Swagger UI hosted on our staging webservices allowing you to try the API with the closest conditions from production systems.
+All endpoints documented here will link to a Swagger UI hosted on our staging webservices allowing you to try the API with the closest conditions from production systems. For convenience, a Swagger UI aggregating all endpoints is available [here](../openapi).
 
 1. On the top left, select the server address matching the address of the Swagger you are currently browsing.
 
@@ -33,6 +33,8 @@ Click [here](https://km-test.s1seven.dev/api) to open the Key Management service
 The KM service allows to manage resources related to crypto operations such as wallets, identities, transactions.
 
 This service is deployed on 2 addresses to distinguish two modes, `test` and `live`. The access to `live` requires a subscription and is only available in production enviroment, whereas the `test` mode allows to try our services without the risk of losing sensitive information.
+
+TODO: describe relation with wallet service
 
 ### Certificate service
 
@@ -198,6 +200,8 @@ curl --request GET \
 
 ### Long lived access token
 
+#### Create
+
 <p align="left">
   <img src="./create-access-token.png">
 </p>
@@ -246,7 +250,7 @@ curl --request POST \
     "actions": ["sign", "send", "read_one"]
   },
   "companies": {
-    "actions": ["read_one", "update_one"]
+    "actions": ["read_one", "update_one", "validate_one"]
   },
   "certificates": {
     "actions": ["read_one", "validate_one", "notarize_one"]
@@ -272,6 +276,10 @@ curl --request POST \
 The access token (`jwt` property in the response) should be stored safely as it is available for 1 year.
 :::
 
+#### Revoke
+
+TODO: revoke access token
+
 ## Common requests
 
 ### Register user
@@ -289,6 +297,10 @@ The access token (`jwt` property in the response) should be stored safely as it 
 ::: warning
 The `refreshToken` should be stored safely as it is available for 60 days.
 :::
+
+### Find own user
+
+TODO
 
 ### Register a company
 
