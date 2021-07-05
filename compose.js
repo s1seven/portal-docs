@@ -48,13 +48,17 @@ const copyDir = (src, dest) => {
 };
 
 (async function(argv) {
-  const folders = ['informations', 'flows'];
+  const folders = ['informations', 'flows', 'openapi'];
   const docsPath = './docs';
   const files = [
     { input: 'logo.png', output: `${docsPath}/.vuepress/public/logo.png` },
     {
       input: 'favicon.ico',
       output: `${docsPath}/.vuepress/public/favicon.ico`,
+    },
+    {
+      input: 'openapi.yaml',
+      output: `${docsPath}/.vuepress/public/specs/openapi.yaml`,
     },
   ];
 

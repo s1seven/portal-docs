@@ -1,0 +1,174 @@
+<template>
+  <div class="open-api-vuepress">
+    <div v-if="hasSpec" class="download-spec" @click="download">Download Spec</div>
+    <div :class="baseClass"></div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+import yaml from 'js-yaml';
+import { saveAs } from 'file-saver';
+import SwaggerUI from 'swagger-ui';
+import 'swagger-ui/dist/swagger-ui.css';
+
+const typeReferenceRegExpr = /^\s*\$ref:\s*(".*")$/gm;
+
+export default {
+  name: 'OpenApi',
+  props: {
+    page: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    hasSpec() {
+      return typeof this.finalSpecName === 'string' && this.finalSpecName.length > 0;
+    },
+  },
+  watch: {
+    page: {
+      handler() {
+        this.loadSwagger();
+      },
+    },
+  },
+  data() {
+    return {
+      baseClass: 'open-api-container',
+      finalSpec: null,
+      finalSpecName: null,
+      commonSchemasContent: null,
+      typesReferenced: [],
+    };
+  },
+  async mounted() {
+    await this.loadCommonSchemas();
+    this.loadSwagger();
+  },
+  methods: {
+    download() {
+      const blob = new Blob([JSON.stringify(this.finalSpec, null, 4)], { type: 'text/plain;charset=utf-8' });
+      saveAs(blob, this.finalSpecName);
+    },
+    async loadCommonSchemas() {
+      const { commonSchemas = [] } = this.$themeConfig;
+      this.commonSchemasContent = await this.findCommonSchemas(commonSchemas);
+    },
+    async loadSwagger() {
+      // const { servers = [] } = this.$themeConfig;
+      const composedNameSpec = `${this.converPagePathToSpecFilename()}.yaml`;
+      try {
+        const { data } = await axios.get(this.fileUrl(composedNameSpec));
+        const spec = yaml.load(this.replaceYamlReferences(data));
+        this.finalSpec = this.mixCommonSchemas(spec, this.commonSchemasContent);
+        this.finalSpecName = `${this.converPagePathToSpecFilename()}.json`;
+        SwaggerUI({
+          spec,
+          // spec: { ...spec, servers: servers.map((url) => ({ url })) },
+          domNode: this.$el.querySelector(`.${this.baseClass}`),
+          persistAuthorization: true,
+        });
+      } catch (err) {
+        this.$el.querySelector(`.${this.baseClass}`).innerHTML = '';
+        this.finalSpec = null;
+        this.finalSpecName = null;
+        console.warn('Spec file not  found:', this.fileUrl(composedNameSpec));
+      }
+    },
+    converPagePathToSpecFilename() {
+      return this.page.regularPath
+        .split('/')
+        .filter((item) => !!item)
+        .join('-')
+        .replace(/\..*$/, '');
+    },
+    fileUrl(fileName) {
+      return `${location.origin}${this.$site.base}specs/${fileName}`;
+    },
+    async findCommonSchemas(commonSchemas) {
+      try {
+        const commonSchemasContent = await Promise.all(commonSchemas.map((file) => axios.get(this.fileUrl(file))));
+        const schemasMixedTogether = commonSchemasContent.reduce((obj, next) => {
+          return { ...obj, ...(next.data || {}) };
+        }, {});
+        return schemasMixedTogether;
+      } catch (err) {
+        console.warn(err);
+      }
+    },
+    mixCommonSchemas(spec, commonSchemas) {
+      if (!spec.components) {
+        spec.components = {};
+      }
+      if (!spec.components.schemas) {
+        spec.components.schemas = {};
+      }
+      const typesToLoad = this.typesReferenced.filter((typeName) => {
+        return !spec.components.schemas[typeName];
+      });
+      typesToLoad
+        .map((typeName) => ({ typeName, schema: commonSchemas[typeName] }))
+        .filter(({ schema }) => schema !== undefined)
+        .forEach(({ typeName, schema }) => {
+          spec.components.schemas[typeName] = schema;
+        });
+      return spec;
+    },
+    replaceYamlReferences(yaml) {
+      let replacedYAML = yaml;
+      let match;
+      const yamlReferences = [];
+      while ((match = typeReferenceRegExpr.exec(replacedYAML))) {
+        const [line, typePath] = match;
+        const [type] = typePath.split('/').reverse();
+        const replacedLine = line.replace(typePath, this.createTypeReference(type));
+        replacedYAML = replacedYAML.replace(line, replacedLine);
+        yamlReferences.push(type);
+      }
+      this.typesReferenced = yamlReferences.map(this.removeLastQuotes);
+      return replacedYAML;
+    },
+    createTypeReference(typeName) {
+      return `"#/components/schemas/${typeName}`;
+    },
+    removeLastQuotes(str) {
+      return str.replace('"', '');
+    },
+  },
+};
+</script>
+
+<style scope>
+.open-api-vuepress .swagger-ui .info .title {
+  padding-right: 120px;
+}
+
+.open-api-container pre {
+  background-color: rgb(125, 132, 146);
+}
+
+.download-spec {
+  position: absolute;
+  right: 20px;
+  font-weight: 500;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  vertical-align: middle;
+  max-width: 100px;
+  padding: 5px;
+  text-align: center;
+}
+
+.download-spec:hover {
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.6);
+}
+
+.download-spec:active {
+  color: red;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.6);
+}
+</style>
