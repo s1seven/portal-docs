@@ -47,7 +47,7 @@ You should set several parameters:
 
 TODO
 
-### Send a transaction to a DLT
+### Send a transaction to a DLT node
 
 TODO
 

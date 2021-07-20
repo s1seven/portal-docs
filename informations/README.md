@@ -16,17 +16,23 @@ All endpoints documented here will link to a Swagger UI hosted on our staging we
 
 ### Auth service
 
+- Subdomain: `auth`
+
 Click [here](https://auth.s1seven.dev/api) to open the Authentication service APIs.
 
 The auth service is responsible for all authentication operations such as login / logout, access token generation and sessions management.
 
 ### User service
 
+- Subdomain: `user`
+
 Click [here](https://user.s1seven.dev/api) to open the User service APIs.
 
 The user service is responsible for all CRUD operations related to user resources management.
 
 ### Key Management service
+
+- Subdomain: `km`
 
 Click [here](https://km-test.s1seven.dev/api) to open the Key Management service APIs.
 
@@ -37,6 +43,8 @@ This service is deployed on 2 addresses to distinguish two modes, `test` and `li
 TODO: describe relation with wallet service
 
 ### Certificate service
+
+- Subdomain: `certificate`
 
 Click [here](https://certificate.s1seven.dev/api) to open the Certificate service APIs.
 
@@ -52,6 +60,8 @@ The Certificate service allows to manipulate quality certificates. The logical f
 
 ### Pipe service
 
+- Subdomain: `pipe`
+
 Click [here](https://pipe.s1seven.dev/api) to open the Pipe service APIs.
 
 The Pipe service allows to synchronize in realtime your application workflow with resources managed on S1Seven platform.
@@ -60,15 +70,19 @@ You can register webhooks or create email subscriptions to watch changes on sele
 
 ## REST API Requests
 
-The API prefix for all S1Seven REST endpoints is:
+The API access pattern for all S1Seven REST endpoints is:
 
-`https://<s1seven-proxy>/<service_resources>`
+`https://<s1seven_service_subdomain>.<s1seven_domain>/<service_resources>`
 
 or
 
-`https://<s1seven-proxy>/<service>/<service_resources>`
+`https://<s1seven_proxy>.<s1seven_domain>/api/<service_resources>`
 
-The expected value for `<service>` is the name of the service, such as auth-service, user-service, km-service, certificate-service, pipe-service.
+or
+
+`https://<s1seven_proxy_subdomain>.<s1seven_domain>/<s1seven_service>/<service_resources>`
+
+The expected value for `<s1seven_service>` is the name of the service, such as auth-service, user-service, km-service, certificate-service, pipe-service.
 
 ::: details The list of valid resources and actions per service :
 
@@ -89,7 +103,7 @@ The expected value for `<service>` is the name of the service, such as auth-serv
       "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
     },
     "companies": {
-      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
+      "actions": ["read_one", "read_many", "validate_one", "create_one", "update_one", "delete_one"]
     }
   },
   "km-service" : {
@@ -131,6 +145,14 @@ The expected value for `<service>` is the name of the service, such as auth-serv
 ```
 
 :::
+
+### Example
+
+To show how to access resources, let's take the `sessions` resource from `auth-service` as an example, located under the development subdomain `s1seven.ovh` :
+
+- https://auth.s1seven.ovh/sessions
+- https://app.s1seven.ovh/api/sessions/
+- https://app.s1seven.ovh/auth-service/sessions/
 
 ## Error Handling
 
