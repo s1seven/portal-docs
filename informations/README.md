@@ -220,6 +220,10 @@ curl --request GET \
  --header 'refresh: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6'
 ```
 
+::: tip
+For a deep dive into access and refresh tokens visit [Refresh Tokens: When to Use Them and How They Interact with JWTs](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)
+:::
+
 ### Long lived access token
 
 #### Create
