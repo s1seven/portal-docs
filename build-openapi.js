@@ -14,13 +14,16 @@ async function mergeAPIs(openApis) {
   output.info = {
     title: 'S1Seven API',
     description: 'Microservices bundled APIs',
-    version: mergeResult.output.info.version,
-    contact: {},
+    version: mergeResult.output.info.version, // use pkg version ?
+    contact: mergeResult.output.info.contact || {},
   };
-  output.servers = [{ url: 'https://app.s1seven.ovh' }, { url: 'https://app.s1seven.dev' }];
+  output.servers = [{ url: 'https://app.s1seven.ovh/api' }, { url: 'https://app.s1seven.dev/api' }];
   output.security = [
     {
       bearer: [],
+    },
+    {
+      refresh: [],
     },
     {
       Authentication: [],
@@ -29,10 +32,7 @@ async function mergeAPIs(openApis) {
       Refresh: [],
     },
   ];
-  output.externalDocs = {
-    description: 'Platform docs',
-    url: 'https://s1seven.github.io/portal-docs/',
-  };
+
   try {
     const openApi = await SwaggerParser.validate(output, {
       dereference: {
@@ -69,7 +69,7 @@ function downloadOpenAPIs(services) {
   return Promise.all(services.map((service) => downloadOpenAPI(service)));
 }
 
-(async function() {
+(async function () {
   const services = ['auth', 'user', 'km', 'certificate', 'pipe'];
   try {
     const openApis = await downloadOpenAPIs(services);

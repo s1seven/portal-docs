@@ -11,7 +11,7 @@ import { saveAs } from 'file-saver';
 import SwaggerUI from 'swagger-ui';
 import 'swagger-ui/dist/swagger-ui.css';
 
-const typeReferenceRegExpr = /^\s*\$ref:\s*(".*")$/gm;
+// const typeReferenceRegExpr = /^\s*\$ref:\s*(".*")$/gm;
 
 export default {
   name: 'OpenApi',
