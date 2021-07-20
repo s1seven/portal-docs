@@ -18,23 +18,21 @@ All endpoints documented here will link to a Swagger UI hosted on our staging we
 
 - Subdomain: `auth`
 
-Click [here](https://auth.s1seven.dev/api) to open the Authentication service APIs.
-
 The auth service is responsible for all authentication operations such as login / logout, access token generation and sessions management.
+
+Open the [Auth service] API.
 
 ### User service
 
 - Subdomain: `user`
 
-Click [here](https://user.s1seven.dev/api) to open the User service APIs.
-
 The user service is responsible for all CRUD operations related to user resources management.
+
+Open the [User service] API.
 
 ### Key Management service
 
 - Subdomain: `km`
-
-Click [here](https://km-test.s1seven.dev/api) to open the Key Management service APIs.
 
 The KM service allows to manage resources related to crypto operations such as wallets, identities, transactions.
 
@@ -42,11 +40,11 @@ This service is deployed on 2 addresses to distinguish two modes, `test` and `li
 
 TODO: describe relation with wallet service
 
+Open the [KM service] API.
+
 ### Certificate service
 
 - Subdomain: `certificate`
-
-Click [here](https://certificate.s1seven.dev/api) to open the Certificate service APIs.
 
 The Certificate service allows to manipulate quality certificates. The logical flow to use its API would be the following :
 
@@ -58,15 +56,17 @@ The Certificate service allows to manipulate quality certificates. The logical f
 
 4. Verify that a certificate received from a partner has been notarized
 
+Open the [Certificate service] API.
+
 ### Pipe service
 
 - Subdomain: `pipe`
 
-Click [here](https://pipe.s1seven.dev/api) to open the Pipe service APIs.
-
 The Pipe service allows to synchronize in realtime your application workflow with resources managed on S1Seven platform.
 
 You can register webhooks or create email subscriptions to watch changes on selected resources and to be notified of these events.
+
+Open the [Pipe service] API.
 
 ## REST API Requests
 
@@ -334,10 +334,15 @@ TODO
 2. A new company can be registered using the [create company] endpoint.
 3. Once created you can get the list of the user's companies with the [me] endpoint.
 
-[create user]: https://app.s1seven.dev/users-service/api/#/users/UsersController_create
-[verify email]: https://app.s1seven.dev/users-service/api/#/users/UsersController_sendConfirmationEmail
-[login]: https://app.s1seven.dev/auth-service/api/#/auth/AuthController_login
-[me]: https://app.s1seven.dev/users-service/api/#/users/UsersController_findMe
-[refresh token]: https://app.s1seven.dev/auth-service/api/#/auth/AuthController_refresh
-[create company]: https://app.s1seven.dev/users-service/api/#/companies/CompaniesController_create
-[create accesstoken]: https://app.s1seven.dev/auth-service/api/#/accesstoken/AccessTokensController_create
+[auth service]: https://auth.s1seven.ovh/api
+[user service]: https://user.s1seven.ovh/api
+[km service]: https://km.s1seven.ovh/api
+[certificate service]: https://certificate.s1seven.ovh/api
+[pipe service]: https://pipe.s1seven.ovh/api
+[create user]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_create
+[verify email]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_sendConfirmationEmail
+[login]: https://app.s1seven.ovh/auth-service/api/#/auth/AuthController_login
+[me]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_findMe
+[refresh token]: https://app.s1seven.ovh/auth-service/api/#/auth/AuthController_refresh
+[create company]: https://app.s1seven.ovh/users-service/api/#/companies/CompaniesController_create
+[create accesstoken]: https://app.s1seven.ovh/auth-service/api/#/accesstoken/AccessTokensController_create

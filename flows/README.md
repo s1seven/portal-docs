@@ -244,14 +244,14 @@ If accessing the email accounts and setting a webhook server are not available o
 
 You can verify that a certificate has been notarized by uploading a file to the [verify certificate] endpoint. You must also provide the mode on which this certificate has been notarized by setting the HTTP query `mode=<expected_mode>`.
 
-[create wallet]: https://app.s1seven.dev/km-service/api/#/wallet/WalletsController_create
-[create identity]: https://app.s1seven.dev/km-service/api/#/identities/IdentitiesController_create
-[register hook]: https://app.s1seven.dev/pipe-service/api/#/hooks/HooksController_create
-[supported schemas]: https://app.s1seven.dev/cert-service/api/#/certificates/CertificatesController_getSupportedSchemas
-[validate json certificate]: https://app.s1seven.dev/cert-service/api/#/certificates/CertificatesController_validateCertificate
-[validate file certificate]: https://app.s1seven.dev/cert-service/api/#/certificates/CertificatesController_validateCertificateFile
-[render json certificate]: https://app.s1seven.dev/cert-service/api/#/certificates/CertificatesController_render
-[render file certificate]: https://app.s1seven.dev/cert-service/api/#/certificates/CertificatesController_renderFile
-[notarize json certificate]: https://app.s1seven.dev/cert-service/api/#/certificates/CertificatesController_notarize
-[notarize file certificate]: https://app.s1seven.dev/cert-service/api/#/certificates/CertificatesController_notarizeFile
-[verify certificate]: https://app.s1seven.dev/cert-service/api/#/certificates/CertificatesController_verify
+[create wallet]: https://app.s1seven.ovh/km-service/api/#/wallet/WalletsController_create
+[create identity]: https://app.s1seven.ovh/km-service/api/#/identities/IdentitiesController_create
+[register hook]: https://app.s1seven.ovh/pipe-service/api/#/hooks/HooksController_create
+[supported schemas]: https://app.s1seven.ovh/cert-service/api/#/certificates/CertificatesController_getSupportedSchemas
+[validate json certificate]: https://app.s1seven.ovh/cert-service/api/#/certificates/CertificatesController_validateCertificate
+[validate file certificate]: https://app.s1seven.ovh/cert-service/api/#/certificates/CertificatesController_validateCertificateFile
+[render json certificate]: https://app.s1seven.ovh/cert-service/api/#/certificates/CertificatesController_render
+[render file certificate]: https://app.s1seven.ovh/cert-service/api/#/certificates/CertificatesController_renderFile
+[notarize json certificate]: https://app.s1seven.ovh/cert-service/api/#/certificates/CertificatesController_notarize
+[notarize file certificate]: https://app.s1seven.ovh/cert-service/api/#/certificates/CertificatesController_notarizeFile
+[verify certificate]: https://app.s1seven.ovh/cert-service/api/#/certificates/CertificatesController_verify
