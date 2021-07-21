@@ -156,11 +156,11 @@ To show how to access resources, let's take the `sessions` resource from `auth-s
 
 ## Error Handling
 
-Responses are formatted in the standard REST format, with a status field showing an error code and an error field with a text description of the error. The possible error codes are described with each API.
+Responses are formatted in the standard REST format, with a status field showing an error code and a message field with a text description of the error. The possible error codes are described with each API.
 
 For example, here is the response for a failed login request:
 
-`https://<s1seven-proxy>/auth/login`
+`https://<s1seven-proxy>/api/auth/login`
 
 ```json
 {
@@ -185,7 +185,7 @@ The following code samples show the types of authentication that can be used wit
 
 ```sh
 curl --request POST \
-  --url https://<auth-server>/auth/login \
+  --url https://<auth-service>/auth/login \
   --header 'content-type: application/json' \
   --data '{
     "username":"so",
@@ -199,8 +199,8 @@ Once you have an access token, you can call endpoints using it, such as:
 
 ```sh
 curl --request GET \
---url http://<user-service>/companies/30e44fef-3858-4fc4-92ec-77ae50619a80 \
---header 'authorization: Bearer dXNlcjExMTE6c1hH5TIErm63+FoOVz4M+y/PDG9aV+qvWlV4MTEraWMhFVmyzEa8/S4YrLtFmUE8VJZzDvdG4vDY6NWRmYWQwN2EtODgyMi00NzM0LTg4NTMtYjA4YjhkNTc0ZTYx'
+--url http://<user-service>/companies/<company-id> \
+--header 'authorization: Bearer <jwt>'
 ```
 
 The header field has the format:
@@ -215,9 +215,9 @@ This is an example of refreshing the token:
 
 ```sh
 curl --request GET \
- --url https://<auth-server>/auth/refresh \
+ --url https://<auth-service>/auth/refresh \
  --header 'content-type: application/json' \
- --header 'refresh: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6'
+ --header 'refresh: Bearer <jwt>'
 ```
 
 ### Long lived access token
@@ -238,10 +238,10 @@ The returned JWT must be added to the authorization header (as a bearer token) f
 
 ```sh
 curl --request POST \
- --url https://<auth-server>/accesstoken?mode=test \
+ --url https://<auth-service>/accesstoken?mode=test \
  --header 'content-type: application/json' \
- --header 'company: 30e44fef-3858-4fc4-92ec-77ae50619a80' \
- --header 'authorization: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6' \
+ --header 'company: <company-id>' \
+ --header 'authorization: Bearer <jwt>' \
  --data '{
     "auth": {
       "actions": ["read_one"]
