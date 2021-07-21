@@ -4,6 +4,9 @@
   "description": "S1Seven platform docs",
   "main": "index.js",
   "scripts": {
+    "docs:openapi:local": "node ./build-openapi.js local",
+    "docs:compose:local": "npm run docs:openapi:local && node ./compose.js",
+    "docs:dev:local": "npm run docs:compose:local && vuepress dev docs",
     "docs:openapi": "node ./build-openapi.js",
     "docs:compose": "npm run docs:openapi && node ./compose.js",
     "docs:dev": "npm run docs:compose && vuepress dev docs",
