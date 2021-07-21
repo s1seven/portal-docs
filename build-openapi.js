@@ -29,12 +29,6 @@ async function mergeAPIs(openApis, localFiles) {
     {
       refresh: [],
     },
-    {
-      Authentication: [],
-    },
-    {
-      Refresh: [],
-    },
   ];
 
   try {
@@ -73,21 +67,16 @@ function downloadOpenAPI(service) {
     method: 'get',
     url,
     responseType: 'json',
-  }).then(({ data }) => {
-    // TODO: delete tags where resource === 'Service'
-    return cleanupSpecs(data);
-  });
+  }).then(({ data }) => cleanupSpecs(data));
 }
 
 function downloadOpenAPIs(services) {
   return Promise.all(services.map((service) => downloadOpenAPI(service)));
 }
 
-async function readOpenAPI(service) {
+function readOpenAPI(service) {
   const filePath = join(process.cwd(), `../${service}-service/openapi.json`);
-  const file = await fs.readFile(filePath, 'utf-8');
-  const specs = JSON.parse(file);
-  return cleanupSpecs(specs);
+  return fs.readFile(filePath, 'utf-8').then((file) => cleanupSpecs(JSON.parse(file)));
 }
 
 function readOpenAPIs(services) {
@@ -103,5 +92,6 @@ function readOpenAPIs(services) {
     console.log(`OpenAPI doc generated`);
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 })(process.argv);
