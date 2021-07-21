@@ -3,7 +3,7 @@ const path = require('path');
 
 const mkdir = (dir) => {
   try {
-    fs.mkdirSync(dir, 0755);
+    fs.mkdirSync(dir, '0755');
   } catch (e) {
     if (e.code !== 'EEXIST') {
       throw e;
@@ -47,7 +47,7 @@ const copyDir = (src, dest) => {
   }
 };
 
-(async function(argv) {
+(async function () {
   const folders = ['informations', 'flows', 'openapi'];
   const docsPath = './docs';
   const files = [
@@ -74,5 +74,6 @@ const copyDir = (src, dest) => {
     console.log(`Documentation generated`);
   } catch (error) {
     console.error(error.message);
+    throw error;
   }
 })(process.argv);
