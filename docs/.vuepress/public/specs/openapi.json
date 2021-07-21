@@ -28,12 +28,6 @@
     },
     {
       "refresh": []
-    },
-    {
-      "Authentication": []
-    },
-    {
-      "Refresh": []
     }
   ],
   "tags": [
@@ -48,10 +42,6 @@
     {
       "name": "accesstoken",
       "description": "Manage company access tokens."
-    },
-    {
-      "name": "Service",
-      "description": "Display microservice credentials."
     },
     {
       "name": "users",
