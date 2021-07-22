@@ -30,6 +30,7 @@ module.exports = {
       ['/informations/', 'General API information'],
       ['/flows/', 'API Flows'],
       ['/openapi/', 'Swagger UI'],
+      ['/environments/', 'Environments'],
     ],
     serviceWorker: {
       updatePopup: true,
