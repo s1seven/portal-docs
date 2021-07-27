@@ -48,7 +48,7 @@ const copyDir = (src, dest) => {
 };
 
 (async function () {
-  const folders = ['informations', 'flows', 'openapi'];
+  const folders = ['informations', 'environments', 'flows', 'openapi'];
   const docsPath = './docs';
   const files = [
     { input: 'logo.png', output: `${docsPath}/.vuepress/public/logo.png` },
