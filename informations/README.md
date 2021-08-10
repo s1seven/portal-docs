@@ -89,10 +89,10 @@ The expected value for `<s1seven_service>` is the name of the service, such as a
 ```json
   "auth-service" : {
     "auth": {
-      "actions": ["read_one", "create_one", "revoke"]
+      "actions": ["read_one", "create_one", "sign_in", "sign_out", "revoke"]
     },
     "sessions": {
-      "actions": ["read_many", "delete_one", "delete_all"]
+      "actions": ["read_one", "read_many", "delete_one", "delete_all"]
     },
     "accesstoken": {
       "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
@@ -100,10 +100,10 @@ The expected value for `<s1seven_service>` is the name of the service, such as a
   },
   "user-service" : {
     "users": {
-      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one", "confirm", "reset"]
     },
     "companies": {
-      "actions": ["read_one", "read_many", "validate_one", "create_one", "update_one", "delete_one"]
+      "actions": ["read_one", "read_many", "validate_one", "create_one", "update_one", "delete_one", "confirm"]
     }
   },
   "km-service" : {
@@ -111,7 +111,7 @@ The expected value for `<s1seven_service>` is the name of the service, such as a
       "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
     },
     "nodes": {
-      "actions": ["read_many", "create_one", "update_one", "delete_one"]
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
     },
     "wallets": {
       "actions": ["read_one", "create_one", "update_one", "delete_one"]
@@ -120,12 +120,12 @@ The expected value for `<s1seven_service>` is the name of the service, such as a
       "actions": ["read_one", "read_many", "create_one"]
     },
     "transactions": {
-      "actions": ["read_one", "read_many", "sign", "send"]
+      "actions": ["read_one", "read_many", "partial_sign", "sign", "send"]
     }
   },
   "certificate-service" : {
     "certificates": {
-      "actions": ["read_one", "validate_one", "notarize_one"]
+      "actions": ["read_one", "create_one", "validate_one", "render_one", "notarize_one"]
     }
   },
   "pipe-service" : {
@@ -133,13 +133,13 @@ The expected value for `<s1seven_service>` is the name of the service, such as a
       "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
     },
     "events": {
-      "actions": ["read_one", "read_many", "update_one"]
+      "actions": ["read_one", "read_many", "update_one", "retry_one"]
     },
     "mailhooks": {
-      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one", "validate_one"]
+      "actions": ["read_one", "read_many", "create_one", "update_one", "delete_one"]
     },
     "mails": {
-      "actions": ["read_one", "read_many", "update_one"]
+      "actions": ["read_one", "read_many", "update_one", "retry_one"]
     }
   },
 ```
@@ -156,7 +156,7 @@ To show how to access resources, let's take the `sessions` resource from `auth-s
 
 ## Error Handling
 
-Responses are formatted in the standard REST format, with a status field showing an error code and a message field with a text description of the error. The possible error codes are described with each API.
+Responses are formatted in the standard REST format, with a status field showing an error code and a message field with a text description of the error. The possible error codes are described with each API endpoint. The message can be a string, a string array or a JS object.
 
 For example, here is the response for a failed login request:
 
@@ -179,7 +179,7 @@ S1Seven uses username/password and access tokens to add a layer of security to t
 
 ### Username and Password
 
-For short term access, such as for the web UI, the user can use a username and password to generate an access token that is valid for 15 minutes and a refresh token that is valid for 60 days by calling the [login] endpoint. The access token must be added to the authorization header (as a bearer token) to every REST call.
+For short term access, such as for the web UI, the user can use a username (or email) and password to generate an access token and a refresh token by calling the [login] endpoint. The access token must be added to the authorization header (as a bearer token) to every REST call.
 
 The following code samples show the types of authentication that can be used with this endpoint.
 
@@ -192,6 +192,10 @@ curl --request POST \
     "password":"password"
   }'
 ```
+
+::: tip
+The access token is valid for 15 minutes and the refresh token is valid for 60 days.
+:::
 
 ### Access Token Usage
 
@@ -209,7 +213,7 @@ The header field has the format:
 
 ### Refresh the token
 
-Once you have an access token, you can use the [refresh token] endpoint to refresh the token.
+Once you have a refresh token, you can use the [refresh token] endpoint to get a new access token.
 
 This is an example of refreshing the token:
 
@@ -232,7 +236,13 @@ curl --request GET \
 The access token is restricted to a company resources and a mode.
 :::
 
-For applications or scripts that require long term access, an access token key with a one-year time limit can be created by calling the [create accesstoken] operation and setting the companyId, the mode and the scopes (which action on which resource) that this token will grant access to.
+For applications or scripts that require long term access, an access token key with a one-year time limit can be created by calling the [create accesstoken] operation and setting :
+
+- the companyId in `company` header,
+- the `mode` in the query,
+- an optional `description`,
+- an optional expiration timestamp in seconds, `expiresIn` default to one year.
+- the scopes (which actions on which resource) that this token will grant access to.
 
 The returned JWT must be added to the authorization header (as a bearer token) for every REST call. The Admin can generate several API keys for different app usages.
 
@@ -243,8 +253,12 @@ curl --request POST \
  --header 'company: <company-id>' \
  --header 'authorization: Bearer <jwt>' \
  --data '{
-    "auth": {
-      "actions": ["read_one"]
+   "description": "test token",
+   "expiresIn": 1843565761,
+   "scopes": {
+      "auth": {
+        "actions": ["read_one"]
+      }
     }
   }'
 ```
@@ -295,7 +309,7 @@ curl --request POST \
 :::
 
 ::: tip
-For a complete list of available scopes, refer to `TokenScopesDto` in the OpenAPI documentation.
+For a complete list of available scopes, refer to `CompanyTokenScopesDto` in the OpenAPI documentation.
 :::
 
 ::: warning
@@ -324,10 +338,6 @@ TODO: revoke access token
 The `refreshToken` should be stored safely as it is available for 60 days.
 :::
 
-### Find own user
-
-TODO
-
 ### Register a company
 
 <p align="left">
@@ -337,6 +347,10 @@ TODO
 1. [login]
 2. A new company can be registered using the [create company] endpoint.
 3. Once created you can get the list of the user's companies with the [me] endpoint.
+
+### Find own user
+
+TODO
 
 [auth service]: https://auth.s1seven.ovh/api
 [user service]: https://user.s1seven.ovh/api
