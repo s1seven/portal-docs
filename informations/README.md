@@ -224,6 +224,10 @@ curl --request GET \
  --header 'refresh: Bearer <jwt>'
 ```
 
+::: tip
+For a deep dive into access and refresh tokens visit [Refresh Tokens: When to Use Them and How They Interact with JWTs](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)
+:::
+
 ### Long lived access token
 
 #### Create
@@ -318,7 +322,15 @@ The access token (`jwt` property in the response) should be stored safely as it 
 
 #### Revoke
 
-TODO: revoke access token
+A token can be revoked which actually will delete the token from the database. 
+
+```sh
+curl --request DELETE \
+ --url https://<auth-server>/accesstoken/ad8de201-fd98-43d6-9e1f-a213c4bb3fb0\
+ --header 'content-type: application/json' \
+ --header 'company: 30e44fef-3858-4fc4-92ec-77ae50619a80' \
+ --header 'authorization: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6' \
+```
 
 ## Common requests
 

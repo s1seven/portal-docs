@@ -107,6 +107,7 @@ dist
 .tern-port
 
 docs/informations
+docs/environments
 docs/flows
 docs/openapi
 docs/README.md
