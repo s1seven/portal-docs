@@ -243,6 +243,7 @@ The access token is restricted to a company resources and a mode.
 For applications or scripts that require long term access, an access token key with a one-year time limit can be created by calling the [create accesstoken] operation and setting :
 
 - the companyId in `company` header,
+- the JWT in `authorization` header,
 - the `mode` in the query,
 - an optional `description`,
 - an optional expiration timestamp in seconds, `expiresIn` default to one year.
@@ -322,14 +323,20 @@ The access token (`jwt` property in the response) should be stored safely as it 
 
 #### Revoke
 
-A token can be revoked which actually will delete the token from the database. 
+A long lived access token can be revoked and its reference deleted from the database by calling [revoke accesstoken] endpoint.
+
+Those parameters should be provided :
+
+- the JWT in `authorization` header,
+- the companyId in `company` header,
+- the id fron the access token created above
 
 ```sh
 curl --request DELETE \
- --url https://<auth-server>/accesstoken/ad8de201-fd98-43d6-9e1f-a213c4bb3fb0\
+ --url https://<auth-server>/accesstoken/<access-token-id>\
  --header 'content-type: application/json' \
- --header 'company: 30e44fef-3858-4fc4-92ec-77ae50619a80' \
- --header 'authorization: Bearer c386ZjU4NGE1ZjUtNjRlOS00M1M9LWIyOTItOWYzZjc0NjUxODg6' \
+ --header 'company: <company-id>' \
+ --header 'authorization: Bearer <jwt>' \
 ```
 
 ## Common requests
@@ -385,3 +392,4 @@ curl --request GET \
 [refresh token]: ../openapi/#/auth/AuthController_refresh
 [create company]: ../openapi/#/companies/CompaniesController_create
 [create accesstoken]: ../openapi/#/accesstoken/AccessTokensController_create
+[revoke accesstoken]: ../openapi/accesstoken/AccessTokensController_delete
