@@ -28,6 +28,7 @@ module.exports = {
     nav: [{ text: 'Home', link: '/' }],
     sidebar: [
       ['/informations/', 'General API information'],
+      ['/environments/', 'Environments'],
       ['/flows/', 'API Flows'],
       ['/openapi/', 'Swagger UI'],
     ],
