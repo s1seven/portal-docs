@@ -6,7 +6,9 @@ The following description details how S1Seven can notarize companies material ce
 
 ## Key management flow
 
-TODO: add flow diagram showing wallet -> identities -> key pairs -> transactions -> blockchain interactions
+<p align="left">
+  <img src="./km-flow.png">
+</p>
 
 ### Create a wallet
 
