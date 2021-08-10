@@ -350,7 +350,15 @@ The `refreshToken` should be stored safely as it is available for 60 days.
 
 ### Find own user
 
-TODO
+To fetch information about the user and companies attached to that account, the [find user] endpoint can be used. The user id is deducted from the JWT token provided in the header.
+
+```sh
+curl --request GET \
+  --url https://<user-service>/users/me \
+  --header 'content-type: application/json' \
+  --header 'authorization: Bearer <jwt>'
+
+```
 
 [auth service]: https://auth.s1seven.ovh/api
 [user service]: https://user.s1seven.ovh/api
@@ -358,6 +366,7 @@ TODO
 [certificate service]: https://certificate.s1seven.ovh/api
 [pipe service]: https://pipe.s1seven.ovh/api
 [create user]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_create
+[find user]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_findMe
 [verify email]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_sendConfirmationEmail
 [login]: https://app.s1seven.ovh/auth-service/api/#/auth/AuthController_login
 [me]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_findMe
