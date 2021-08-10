@@ -67,6 +67,8 @@ export default {
           domNode: this.$el.querySelector(`.${this.baseClass}`),
           persistAuthorization: true,
           deepLinking: true,
+          docExpansion: 'none',
+          showCommonExtensions: true,
         });
       } catch (err) {
         this.$el.querySelector(`.${this.baseClass}`).innerHTML = '';
