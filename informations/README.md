@@ -298,6 +298,10 @@ curl --request POST \
 
 :::
 
+::: tip
+For a complete list of available scopes, refer to `TokenScopesDto` in the OpenAPI documentation.
+:::
+
 ::: warning
 The access token (`jwt` property in the response) should be stored safely as it is available for 1 year.
 :::
