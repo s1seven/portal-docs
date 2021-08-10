@@ -7554,7 +7554,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IdentityDto1"
+                  "$ref": "#/components/schemas/IdentityDto"
                 }
               }
             }
@@ -7752,7 +7752,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/IdentityDto1"
+                    "$ref": "#/components/schemas/IdentityDto"
                   }
                 }
               }
@@ -7912,7 +7912,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/IdentityDto1"
+                  "$ref": "#/components/schemas/IdentityDto"
                 }
               }
             }
@@ -9155,7 +9155,7 @@
                   "type": "object",
                   "properties": {
                     "wallet": {
-                      "$ref": "#/components/schemas/WalletDto1"
+                      "$ref": "#/components/schemas/WalletDto"
                     },
                     "masterKey": {
                       "type": "object",
@@ -9343,7 +9343,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WalletDto1"
+                  "$ref": "#/components/schemas/WalletDto"
                 }
               }
             }
@@ -9515,7 +9515,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WalletDto1"
+                  "$ref": "#/components/schemas/WalletDto"
                 }
               }
             }
@@ -9672,7 +9672,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WalletDto1"
+                  "$ref": "#/components/schemas/WalletDto"
                 }
               }
             }
@@ -9833,7 +9833,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/IdentityDto1"
+                    "$ref": "#/components/schemas/IdentityDto"
                   }
                 }
               }
@@ -10042,7 +10042,7 @@
                     "type": "object",
                     "properties": {
                       "identity": {
-                        "$ref": "#/components/schemas/IdentityDto1"
+                        "$ref": "#/components/schemas/IdentityDto"
                       }
                     }
                   }
@@ -10227,7 +10227,7 @@
                   "type": "object",
                   "properties": {
                     "wallet": {
-                      "$ref": "#/components/schemas/WalletDto1"
+                      "$ref": "#/components/schemas/WalletDto"
                     },
                     "masterKey": {
                       "type": "object",
@@ -10446,7 +10446,7 @@
                   "type": "object",
                   "properties": {
                     "wallet": {
-                      "$ref": "#/components/schemas/WalletDto1"
+                      "$ref": "#/components/schemas/WalletDto"
                     },
                     "masterKey": {
                       "type": "object",
@@ -11170,7 +11170,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TransactionDto1"
+                    "$ref": "#/components/schemas/TransactionDto"
                   }
                 }
               }
@@ -12470,7 +12470,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransactionDto1"
+                  "$ref": "#/components/schemas/TransactionDto"
                 }
               }
             }
@@ -21046,121 +21046,6 @@
           "wallet"
         ]
       },
-      "IdentityDto1": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "coinType": {
-            "type": "number",
-            "description": "SLIP44 coin type used for derivation path.",
-            "example": 822,
-            "externalDocs": {
-              "url": "https://github.com/satoshilabs/slips/blob/master/slip-0044.md"
-            }
-          },
-          "account": {
-            "type": "number",
-            "description": "Account used for derivation path",
-            "example": 234,
-            "externalDocs": {
-              "url": "https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#Account"
-            }
-          },
-          "index": {
-            "type": "number",
-            "description": "Index used for derivation path",
-            "example": 234,
-            "externalDocs": {
-              "url": "https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#index"
-            }
-          },
-          "change": {
-            "type": "number",
-            "description": "Chain used for derivation path",
-            "example": 0,
-            "default": 0,
-            "externalDocs": {
-              "url": "https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#change"
-            }
-          },
-          "mode": {
-            "description": "Mode in which this identity is restricted",
-            "example": "test",
-            "type": "string",
-            "enum": [
-              "live",
-              "test"
-            ]
-          },
-          "did": {
-            "type": "string",
-            "description": "DID controller Id, derived from the public key returned by the wallet",
-            "example": "did:key:z6MkfrnzETKcA9WnavahMG52mEJpKSNrZ6PvHmwV9LoJkStG"
-          },
-          "publicKey": {
-            "type": "string",
-            "description": "Public key returned by the wallet, encoded to the format standard used by the given coinType",
-            "example": "2QXweD5Apc2KURjzfh7Bv8kpVs719D9Zbm2ZK4qHqE6t"
-          },
-          "status": {
-            "description": "Identity status bound to wallet status",
-            "example": "valid",
-            "type": "string",
-            "enum": [
-              "valid",
-              "obsolete"
-            ]
-          },
-          "wallet": {
-            "description": "Wallet generating keys for this identity",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/WalletDto1"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "transactions": {
-            "type": "array",
-            "description": "Identity's transactions",
-            "default": [],
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/TransactionDto1"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "coinType",
-          "account",
-          "index",
-          "mode",
-          "did",
-          "publicKey",
-          "status",
-          "wallet"
-        ]
-      },
       "CreateCoinTypeDto": {
         "type": "object",
         "properties": {
@@ -21272,95 +21157,6 @@
         "required": [
           "name",
           "options"
-        ]
-      },
-      "WalletDto1": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "name": {
-            "type": "string",
-            "description": "Wallet label"
-          },
-          "connectionUrl": {
-            "type": "string",
-            "description": "Wallet bridge URL",
-            "example": "https://x-wallet.com"
-          },
-          "backedUp": {
-            "type": "boolean",
-            "description": "Indicate if this wallet has been backed up",
-            "default": false
-          },
-          "status": {
-            "description": "Wallet status",
-            "example": "disabled",
-            "default": "enabled",
-            "type": "string",
-            "enum": [
-              "enabled",
-              "disabled"
-            ]
-          },
-          "mode": {
-            "description": "Mode in which this wallet is restricted",
-            "example": "test",
-            "type": "string",
-            "enum": [
-              "live",
-              "test"
-            ]
-          },
-          "language": {
-            "type": "string",
-            "description": "Language used to initialize wallet",
-            "default": "english"
-          },
-          "owner": {
-            "description": "Wallet's owner",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CompanyDto1"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "identities": {
-            "type": "array",
-            "description": "Wallet's identities",
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/IdentityDto1"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "connectionUrl",
-          "backedUp",
-          "status",
-          "mode",
-          "owner"
         ]
       },
       "UpdateWalletDto": {
@@ -22123,102 +21919,6 @@
           "coinType"
         ]
       },
-      "TransactionDto1": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "coinType": {
-            "type": "number",
-            "description": "BIP44 coin type, see SLIP44 registry for a complete list",
-            "example": 822,
-            "externalDocs": {
-              "url": "https://github.com/satoshilabs/slips/blob/master/slip-0044.md"
-            }
-          },
-          "type": {
-            "description": "Transaction type",
-            "example": "opaque",
-            "type": "string",
-            "enum": [
-              "transparent",
-              "opaque",
-              "stealth"
-            ]
-          },
-          "transactionId": {
-            "type": "string",
-            "description": "Transactions's chain id"
-          },
-          "signed": {
-            "type": "boolean",
-            "description": "Indicate if transaction's fully signed"
-          },
-          "sent": {
-            "type": "boolean",
-            "description": "Indicate if transaction was sent to a node"
-          },
-          "fulfillments": {
-            "description": "Inputs serialized fulfillements",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "mode": {
-            "description": "Mode in which this transaction is scoped",
-            "example": "test",
-            "type": "string",
-            "enum": [
-              "live",
-              "test"
-            ]
-          },
-          "identities": {
-            "type": "array",
-            "description": "Transaction's creator identity",
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/IdentityDto1"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          },
-          "owner": {
-            "description": "Company of Transaction's creator",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CompanyDto1"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          }
-        },
-        "required": [
-          "id",
-          "coinType",
-          "type",
-          "mode",
-          "identities",
-          "owner"
-        ]
-      },
       "SignedTransactionDto": {
         "type": "object",
         "properties": {
@@ -22226,7 +21926,7 @@
             "description": "Transaction metadata",
             "allOf": [
               {
-                "$ref": "#/components/schemas/TransactionDto1"
+                "$ref": "#/components/schemas/TransactionDto"
               }
             ]
           },
@@ -22407,345 +22107,6 @@
           "transaction",
           "signedTx",
           "coinType"
-        ]
-      },
-      "AddressDto1": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "country": {
-            "type": "string",
-            "description": "Country ISO code",
-            "example": "AT"
-          },
-          "street": {
-            "type": "string",
-            "description": "Street",
-            "example": "110th Street"
-          },
-          "city": {
-            "type": "string",
-            "description": "City",
-            "example": "Vienna"
-          },
-          "zipCode": {
-            "type": "string",
-            "description": "ZipCode",
-            "example": "1030"
-          }
-        },
-        "required": [
-          "id",
-          "country",
-          "street",
-          "city",
-          "zipCode"
-        ]
-      },
-      "UserDto1": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "username": {
-            "type": "string",
-            "description": "User's name"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's hashed password"
-          },
-          "email": {
-            "type": "string",
-            "description": "User email address",
-            "format": "email"
-          },
-          "address": {
-            "description": "User's address",
-            "allOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Instance's unique id"
-                  },
-                  "country": {
-                    "type": "string",
-                    "description": "Country ISO code",
-                    "example": "AT"
-                  },
-                  "street": {
-                    "type": "string",
-                    "description": "Street",
-                    "example": "110th Street"
-                  },
-                  "city": {
-                    "type": "string",
-                    "description": "City",
-                    "example": "Vienna"
-                  },
-                  "zipCode": {
-                    "type": "string",
-                    "description": "ZipCode",
-                    "example": "1030"
-                  }
-                },
-                "required": [
-                  "id",
-                  "country",
-                  "street",
-                  "city",
-                  "zipCode"
-                ]
-              }
-            ]
-          },
-          "role": {
-            "description": "User's role",
-            "example": "USER",
-            "type": "string",
-            "enum": [
-              "USER",
-              "ADMIN"
-            ]
-          },
-          "status": {
-            "description": "User's status",
-            "example": "active",
-            "type": "string",
-            "enum": [
-              "active",
-              "inactive"
-            ]
-          },
-          "emailConfirmed": {
-            "type": "boolean",
-            "description": "User email has been confirmed",
-            "default": false
-          },
-          "onBoarded": {
-            "type": "boolean",
-            "description": "User has been on boarded",
-            "default": false
-          },
-          "companies": {
-            "type": "array",
-            "description": "User's companies",
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/CompanyDto1"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          },
-          "assignedCompanies": {
-            "type": "array",
-            "description": "User's assigned companies",
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/CompanyDto1"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "username",
-          "email",
-          "role",
-          "status",
-          "emailConfirmed",
-          "onBoarded"
-        ]
-      },
-      "CompanyDto1": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "name": {
-            "type": "string",
-            "description": "Company's name",
-            "example": "AwesomeCompany GMBH"
-          },
-          "address": {
-            "description": "Company's address",
-            "allOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Instance's unique id"
-                  },
-                  "country": {
-                    "type": "string",
-                    "description": "Country ISO code",
-                    "example": "AT"
-                  },
-                  "street": {
-                    "type": "string",
-                    "description": "Street",
-                    "example": "110th Street"
-                  },
-                  "city": {
-                    "type": "string",
-                    "description": "City",
-                    "example": "Vienna"
-                  },
-                  "zipCode": {
-                    "type": "string",
-                    "description": "ZipCode",
-                    "example": "1030"
-                  }
-                },
-                "required": [
-                  "id",
-                  "country",
-                  "street",
-                  "city",
-                  "zipCode"
-                ]
-              }
-            ]
-          },
-          "vatId": {
-            "type": "string",
-            "description": "Company's VAT ID",
-            "example": "ATU74488404"
-          },
-          "emails": {
-            "description": "Company's email",
-            "example": [
-              "contact@awesomecompany.com"
-            ],
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "websites": {
-            "description": "Company's website",
-            "example": [
-              "https://awesomecompany.com"
-            ],
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "accreditations": {
-            "description": "Company's accreditations urls",
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "verified": {
-            "type": "boolean",
-            "description": "Company has been verified"
-          },
-          "owner": {
-            "description": "Company's owner",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/UserDto1"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "members": {
-            "type": "array",
-            "description": "Company's members",
-            "default": [],
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/UserDto1"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          },
-          "wallets": {
-            "type": "array",
-            "description": "Company's wallets",
-            "default": [],
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/WalletDto1"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          },
-          "transactions": {
-            "type": "array",
-            "description": "Company's transactions",
-            "default": [],
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/TransactionDto1"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "address",
-          "vatId",
-          "verified",
-          "owner",
-          "members"
         ]
       },
       "MasterKeyDto": {
@@ -23621,209 +22982,6 @@
           "scopes"
         ]
       },
-      "AddressDto2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "country": {
-            "type": "string",
-            "description": "Country ISO code",
-            "example": "AT"
-          },
-          "street": {
-            "type": "string",
-            "description": "Street",
-            "example": "110th Street"
-          },
-          "city": {
-            "type": "string",
-            "description": "City",
-            "example": "Vienna"
-          },
-          "zipCode": {
-            "type": "string",
-            "description": "ZipCode",
-            "example": "1030"
-          }
-        },
-        "required": [
-          "id",
-          "country",
-          "street",
-          "city",
-          "zipCode"
-        ]
-      },
-      "CompanyDto2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "name": {
-            "type": "string",
-            "description": "Company's name",
-            "example": "AwesomeCompany GMBH"
-          },
-          "address": {
-            "description": "Company's address",
-            "allOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Instance's unique id"
-                  },
-                  "country": {
-                    "type": "string",
-                    "description": "Country ISO code",
-                    "example": "AT"
-                  },
-                  "street": {
-                    "type": "string",
-                    "description": "Street",
-                    "example": "110th Street"
-                  },
-                  "city": {
-                    "type": "string",
-                    "description": "City",
-                    "example": "Vienna"
-                  },
-                  "zipCode": {
-                    "type": "string",
-                    "description": "ZipCode",
-                    "example": "1030"
-                  }
-                },
-                "required": [
-                  "id",
-                  "country",
-                  "street",
-                  "city",
-                  "zipCode"
-                ]
-              }
-            ]
-          },
-          "vatId": {
-            "type": "string",
-            "description": "Company's VAT ID",
-            "example": "ATU74488404"
-          },
-          "emails": {
-            "description": "Company's email",
-            "example": [
-              "contact@awesomecompany.com"
-            ],
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "websites": {
-            "description": "Company's website",
-            "example": [
-              "https://awesomecompany.com"
-            ],
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "accreditations": {
-            "description": "Company's accreditations urls",
-            "default": [],
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "verified": {
-            "type": "boolean",
-            "description": "Company has been verified"
-          },
-          "owner": {
-            "description": "Company's owner",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/UserDto2"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "members": {
-            "type": "array",
-            "description": "Company's members",
-            "default": [],
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/UserDto2"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          },
-          "wallets": {
-            "type": "array",
-            "description": "Company's wallets",
-            "default": [],
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/WalletDto2"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          },
-          "transactions": {
-            "type": "array",
-            "description": "Company's transactions",
-            "default": [],
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/TransactionDto2"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "address",
-          "vatId",
-          "verified",
-          "owner",
-          "members"
-        ]
-      },
       "HookDto": {
         "type": "object",
         "properties": {
@@ -23958,7 +23116,7 @@
             "description": "Hook's owner",
             "allOf": [
               {
-                "$ref": "#/components/schemas/CompanyDto2"
+                "$ref": "#/components/schemas/CompanyDto"
               }
             ]
           },
@@ -24505,7 +23663,7 @@
             "description": "Hook's owner",
             "allOf": [
               {
-                "$ref": "#/components/schemas/CompanyDto2"
+                "$ref": "#/components/schemas/CompanyDto"
               }
             ]
           },
@@ -24828,442 +23986,6 @@
       "Buffer": {
         "type": "object",
         "properties": {}
-      },
-      "UserDto2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "username": {
-            "type": "string",
-            "description": "User's name"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's hashed password"
-          },
-          "email": {
-            "type": "string",
-            "description": "User email address",
-            "format": "email"
-          },
-          "address": {
-            "description": "User's address",
-            "allOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Instance's unique id"
-                  },
-                  "country": {
-                    "type": "string",
-                    "description": "Country ISO code",
-                    "example": "AT"
-                  },
-                  "street": {
-                    "type": "string",
-                    "description": "Street",
-                    "example": "110th Street"
-                  },
-                  "city": {
-                    "type": "string",
-                    "description": "City",
-                    "example": "Vienna"
-                  },
-                  "zipCode": {
-                    "type": "string",
-                    "description": "ZipCode",
-                    "example": "1030"
-                  }
-                },
-                "required": [
-                  "id",
-                  "country",
-                  "street",
-                  "city",
-                  "zipCode"
-                ]
-              }
-            ]
-          },
-          "role": {
-            "description": "User's role",
-            "example": "USER",
-            "type": "string",
-            "enum": [
-              "USER",
-              "ADMIN"
-            ]
-          },
-          "status": {
-            "description": "User's status",
-            "example": "active",
-            "type": "string",
-            "enum": [
-              "active",
-              "inactive"
-            ]
-          },
-          "emailConfirmed": {
-            "type": "boolean",
-            "description": "User email has been confirmed",
-            "default": false
-          },
-          "onBoarded": {
-            "type": "boolean",
-            "description": "User has been on boarded",
-            "default": false
-          },
-          "companies": {
-            "type": "array",
-            "description": "User's companies",
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/CompanyDto2"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          },
-          "assignedCompanies": {
-            "type": "array",
-            "description": "User's assigned companies",
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/CompanyDto2"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "username",
-          "email",
-          "role",
-          "status",
-          "emailConfirmed",
-          "onBoarded"
-        ]
-      },
-      "WalletDto2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "name": {
-            "type": "string",
-            "description": "Wallet label"
-          },
-          "connectionUrl": {
-            "type": "string",
-            "description": "Wallet bridge URL",
-            "example": "https://x-wallet.com"
-          },
-          "backedUp": {
-            "type": "boolean",
-            "description": "Indicate if this wallet has been backed up",
-            "default": false
-          },
-          "status": {
-            "description": "Wallet status",
-            "example": "disabled",
-            "default": "enabled",
-            "type": "string",
-            "enum": [
-              "enabled",
-              "disabled"
-            ]
-          },
-          "mode": {
-            "description": "Mode in which this wallet is restricted",
-            "example": "test",
-            "type": "string",
-            "enum": [
-              "live",
-              "test"
-            ]
-          },
-          "language": {
-            "type": "string",
-            "description": "Language used to initialize wallet",
-            "default": "english"
-          },
-          "owner": {
-            "description": "Wallet's owner",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CompanyDto2"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "identities": {
-            "type": "array",
-            "description": "Wallet's identities",
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/IdentityDto2"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "connectionUrl",
-          "backedUp",
-          "status",
-          "mode",
-          "owner"
-        ]
-      },
-      "TransactionDto2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "coinType": {
-            "type": "number",
-            "description": "BIP44 coin type, see SLIP44 registry for a complete list",
-            "example": 822,
-            "externalDocs": {
-              "url": "https://github.com/satoshilabs/slips/blob/master/slip-0044.md"
-            }
-          },
-          "type": {
-            "description": "Transaction type",
-            "example": "opaque",
-            "type": "string",
-            "enum": [
-              "transparent",
-              "opaque",
-              "stealth"
-            ]
-          },
-          "transactionId": {
-            "type": "string",
-            "description": "Transactions's chain id"
-          },
-          "signed": {
-            "type": "boolean",
-            "description": "Indicate if transaction's fully signed"
-          },
-          "sent": {
-            "type": "boolean",
-            "description": "Indicate if transaction was sent to a node"
-          },
-          "fulfillments": {
-            "description": "Inputs serialized fulfillements",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "mode": {
-            "description": "Mode in which this transaction is scoped",
-            "example": "test",
-            "type": "string",
-            "enum": [
-              "live",
-              "test"
-            ]
-          },
-          "identities": {
-            "type": "array",
-            "description": "Transaction's creator identity",
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/IdentityDto2"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          },
-          "owner": {
-            "description": "Company of Transaction's creator",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/CompanyDto2"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          }
-        },
-        "required": [
-          "id",
-          "coinType",
-          "type",
-          "mode",
-          "identities",
-          "owner"
-        ]
-      },
-      "IdentityDto2": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Instance's unique id"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Instance's creation date"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Instance's last update date"
-          },
-          "coinType": {
-            "type": "number",
-            "description": "SLIP44 coin type used for derivation path.",
-            "example": 822,
-            "externalDocs": {
-              "url": "https://github.com/satoshilabs/slips/blob/master/slip-0044.md"
-            }
-          },
-          "account": {
-            "type": "number",
-            "description": "Account used for derivation path",
-            "example": 234,
-            "externalDocs": {
-              "url": "https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#Account"
-            }
-          },
-          "index": {
-            "type": "number",
-            "description": "Index used for derivation path",
-            "example": 234,
-            "externalDocs": {
-              "url": "https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#index"
-            }
-          },
-          "change": {
-            "type": "number",
-            "description": "Chain used for derivation path",
-            "example": 0,
-            "default": 0,
-            "externalDocs": {
-              "url": "https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki#change"
-            }
-          },
-          "mode": {
-            "description": "Mode in which this identity is restricted",
-            "example": "test",
-            "type": "string",
-            "enum": [
-              "live",
-              "test"
-            ]
-          },
-          "did": {
-            "type": "string",
-            "description": "DID controller Id, derived from the public key returned by the wallet",
-            "example": "did:key:z6MkfrnzETKcA9WnavahMG52mEJpKSNrZ6PvHmwV9LoJkStG"
-          },
-          "publicKey": {
-            "type": "string",
-            "description": "Public key returned by the wallet, encoded to the format standard used by the given coinType",
-            "example": "2QXweD5Apc2KURjzfh7Bv8kpVs719D9Zbm2ZK4qHqE6t"
-          },
-          "status": {
-            "description": "Identity status bound to wallet status",
-            "example": "valid",
-            "type": "string",
-            "enum": [
-              "valid",
-              "obsolete"
-            ]
-          },
-          "wallet": {
-            "description": "Wallet generating keys for this identity",
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/WalletDto2"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "transactions": {
-            "type": "array",
-            "description": "Identity's transactions",
-            "default": [],
-            "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/TransactionDto2"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        "required": [
-          "id",
-          "coinType",
-          "account",
-          "index",
-          "mode",
-          "did",
-          "publicKey",
-          "status",
-          "wallet"
-        ]
       }
     },
     "securitySchemes": {

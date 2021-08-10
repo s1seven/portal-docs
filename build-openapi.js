@@ -1,8 +1,26 @@
 const SwaggerParser = require('@apidevtools/swagger-parser');
 const axios = require('axios');
 const { promises: fs } = require('fs');
+const omit = require('lodash.omit');
 const { join } = require('path');
 const { merge } = require('openapi-merge');
+
+// fix schemas merge issues (schemas incremented by suffix)
+function solveMergeConflicts(mergeOutput) {
+  const conflictedSchemas = ['IdentityDto', 'WalletDto', 'TransactionDto', 'AddressDto', 'UserDto', 'CompanyDto'];
+  const possibleSuffixes = [1, 2, 3];
+  const incrementedSchemas = conflictedSchemas
+    .map((schema) => possibleSuffixes.map((suffix) => `${schema}${suffix}`))
+    .flat();
+
+  mergeOutput.components.schemas = omit(mergeOutput.components.schemas, incrementedSchemas);
+
+  const stringifiedOutput = conflictedSchemas.reduce(
+    (acc, schema) => possibleSuffixes.reduce((subAcc, suffix) => subAcc.replaceAll(`${schema}${suffix}`, schema), acc),
+    JSON.stringify(mergeOutput),
+  );
+  return JSON.parse(stringifiedOutput);
+}
 
 async function mergeAPIs(openApis, localFiles) {
   const inputs = openApis.map((openapi) => ({ oas: openapi }));
@@ -11,12 +29,12 @@ async function mergeAPIs(openApis, localFiles) {
     throw new Error(mergeResult.message);
   }
 
-  const output = mergeResult.output;
+  let output = mergeResult.output;
   output.info = {
     title: 'S1Seven API',
     description: 'Microservices bundled APIs',
-    version: mergeResult.output.info.version, // use pkg version ?
-    contact: mergeResult.output.info.contact || {},
+    version: output.info.version, // use pkg version ?
+    contact: output.info.contact || {},
   };
   output.servers = localFiles
     ? [{ url: 'http://localhost/api' }]
@@ -30,6 +48,8 @@ async function mergeAPIs(openApis, localFiles) {
       refresh: [],
     },
   ];
+
+  output = solveMergeConflicts(output);
 
   try {
     const openApi = await SwaggerParser.validate(output, {
