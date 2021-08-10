@@ -66,6 +66,7 @@ export default {
           spec,
           domNode: this.$el.querySelector(`.${this.baseClass}`),
           persistAuthorization: true,
+          deepLinking: true,
         });
       } catch (err) {
         this.$el.querySelector(`.${this.baseClass}`).innerHTML = '';

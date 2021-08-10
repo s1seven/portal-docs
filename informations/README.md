@@ -365,11 +365,11 @@ curl --request GET \
 [km service]: https://km.s1seven.ovh/api
 [certificate service]: https://certificate.s1seven.ovh/api
 [pipe service]: https://pipe.s1seven.ovh/api
-[create user]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_create
-[find user]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_findMe
-[verify email]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_sendConfirmationEmail
-[login]: https://app.s1seven.ovh/auth-service/api/#/auth/AuthController_login
-[me]: https://app.s1seven.ovh/users-service/api/#/users/UsersController_findMe
-[refresh token]: https://app.s1seven.ovh/auth-service/api/#/auth/AuthController_refresh
-[create company]: https://app.s1seven.ovh/users-service/api/#/companies/CompaniesController_create
-[create accesstoken]: https://app.s1seven.ovh/auth-service/api/#/accesstoken/AccessTokensController_create
+[create user]: ../openapi/#/users/UsersController_create
+[find user]: ../openapi/#/users/UsersController_findMe
+[verify email]: ../openapi/#/users/UsersController_sendConfirmationEmail
+[login]: ../openapi/#/auth/AuthController_login
+[me]: ../openapi/#/users/UsersController_findMe
+[refresh token]: ../openapi/#/auth/AuthController_refresh
+[create company]: ../openapi/#/companies/CompaniesController_create
+[create accesstoken]: ../openapi/#/accesstoken/AccessTokensController_create
