@@ -3,7 +3,7 @@ const path = require('path');
 
 const mkdir = (dir) => {
   try {
-    fs.mkdirSync(dir, '0755');
+    fs.mkdirSync(dir, { recursive: true, mode: '0755' });
   } catch (e) {
     if (e.code !== 'EEXIST') {
       throw e;
@@ -39,20 +39,20 @@ const copyDir = (src, dest) => {
   mkdir(dest);
   removeDirContent(dest);
   const files = fs.readdirSync(src);
-  for (let i = 0; i < files.length; i++) {
-    const current = fs.lstatSync(path.join(src, files[i]));
+  for (const file of files) {
+    const current = fs.lstatSync(path.join(src, file));
     if (current.isDirectory()) {
-      copyDir(path.join(src, files[i]), path.join(dest, files[i]));
+      copyDir(path.join(src, file), path.join(dest, file));
     } else if (current.isSymbolicLink()) {
-      const symlink = fs.readlinkSync(path.join(src, files[i]));
-      fs.symlinkSync(symlink, path.join(dest, files[i]));
+      const symlink = fs.readlinkSync(path.join(src, file));
+      fs.symlinkSync(symlink, path.join(dest, file));
     } else {
-      copy(path.join(src, files[i]), path.join(dest, files[i]));
+      copy(path.join(src, file), path.join(dest, file));
     }
   }
 };
 
-(async function () {
+(function () {
   const docsPath = './docs';
   const folders = [
     { input: 'information', output: `${docsPath}/docs/information` },
