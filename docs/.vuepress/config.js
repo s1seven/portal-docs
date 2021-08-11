@@ -3,7 +3,7 @@ const pkg = require('../../package.json');
 module.exports = {
   title: 'S1Seven Developers guide',
   base: `/${pkg.name}${process.env.S1SevenDocVersion_PATH || '/'}`,
-  outDir: 'docs/.vuepress/dist',
+  // outDir: 'docs/.vuepress/dist',
   description: pkg.description,
   head: [
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],

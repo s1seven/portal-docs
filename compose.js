@@ -53,14 +53,14 @@ const copyDir = (src, dest) => {
 };
 
 (async function () {
+  const docsPath = './docs';
   const folders = [
-    { input: 'information', output: `docs/information` },
-    { input: 'environments', output: `docs/environments` },
-    { input: 'flows', output: `docs/flows` },
-    { input: 'openapi', output: `docs/openapi` },
+    { input: 'information', output: `${docsPath}/docs/information` },
+    { input: 'environments', output: `${docsPath}/docs/environments` },
+    { input: 'flows', output: `${docsPath}/docs/flows` },
+    { input: 'openapi', output: `${docsPath}/docs/openapi` },
     { input: 'version' },
   ];
-  const docsPath = './docs';
   const files = [
     { input: 'logo.png', output: `${docsPath}/.vuepress/public/logo.png` },
     {
@@ -75,7 +75,7 @@ const copyDir = (src, dest) => {
 
   try {
     folders.map(({ input, output }) => {
-      const directory = `${docsPath}/${output || input}`;
+      const directory = output || input;
       copyDir(input, directory);
     });
 

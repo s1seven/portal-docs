@@ -4,7 +4,8 @@ const context = require('./docs/.vuepress/config');
 
 // TODO: pass options via CLI
 const options = {};
-const notFoundPath = resolve(context.outDir, '404.html');
+const outDir = context.outDir || 'docs/.vuepress/dist';
+const notFoundPath = resolve(outDir, '404.html');
 const port = 8080;
 const host = 'localhost';
 
@@ -12,7 +13,7 @@ const host = 'localhost';
 const app = express();
 
 // serve static files
-app.use(context.base, express.static(context.outDir, options.staticOptions));
+app.use(context.base, express.static(outDir, options.staticOptions));
 
 // fallback to base url
 app.get(/.*/, (req, res, next) => {
