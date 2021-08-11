@@ -5,7 +5,7 @@ module.exports = {
   // when deploying under github domains
   // base: `/${pkg.name}${process.env.S1SevenDocVersion_PATH || '/'}`,
   // when deploying under s1seven domains
-  base: process.env.S1SevenDocVersion_PATH ? `/${process.env.S1SevenDocVersion_PATH}` : '',
+  base: process.env.S1SevenDocVersion_PATH ? `${process.env.S1SevenDocVersion_PATH}` : '',
   outDir: 'docs/.vuepress/dist',
   description: pkg.description,
   head: [
