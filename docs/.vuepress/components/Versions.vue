@@ -63,9 +63,9 @@ export default {
         },
       };
 
-      if (this.githubToken) {
-        axiosConfig.headers.authorization = `Bearer ${this.githubToken}`;
-      }
+      // if (this.githubToken) {
+      //   axiosConfig.headers.authorization = `Bearer ${this.githubToken}`;
+      // }
       return Axios.get(url, axiosConfig).then((res) => res.data);
     },
 
