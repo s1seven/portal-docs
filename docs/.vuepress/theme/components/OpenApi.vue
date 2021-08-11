@@ -81,7 +81,7 @@ export default {
       return this.page.regularPath
         .split('/')
         .filter((item) => !!item)
-        .join('-')
+        .pop()
         .replace(/\..*$/, '');
     },
     fileUrl(fileName) {
@@ -90,10 +90,7 @@ export default {
     async findCommonSchemas(commonSchemas) {
       try {
         const commonSchemasContent = await Promise.all(commonSchemas.map((file) => axios.get(this.fileUrl(file))));
-        const schemasMixedTogether = commonSchemasContent.reduce((obj, next) => {
-          return { ...obj, ...(next.data || {}) };
-        }, {});
-        return schemasMixedTogether;
+        return commonSchemasContent.reduce((obj, next) => ({ ...obj, ...(next.data || {}) }), {});
       } catch (err) {
         console.warn(err);
       }
@@ -105,9 +102,7 @@ export default {
       if (!spec.components.schemas) {
         spec.components.schemas = {};
       }
-      const typesToLoad = this.typesReferenced.filter((typeName) => {
-        return !spec.components.schemas[typeName];
-      });
+      const typesToLoad = this.typesReferenced.filter((typeName) => !spec.components.schemas[typeName]);
       typesToLoad
         .map((typeName) => ({ typeName, schema: commonSchemas[typeName] }))
         .filter(({ schema }) => schema !== undefined)
