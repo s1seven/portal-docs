@@ -2,8 +2,11 @@ const pkg = require('../../package.json');
 
 module.exports = {
   title: 'S1Seven Developers guide',
-  base: `/${pkg.name}${process.env.S1SevenDocVersion_PATH || '/'}`,
-  // outDir: 'docs/.vuepress/dist',
+  // when deploying under github domains
+  // base: `/${pkg.name}${process.env.S1SevenDocVersion_PATH || '/'}`,
+  // when deploying under s1seven domains
+  base: `/${process.env.S1SevenDocVersion_PATH || ''}`,
+  outDir: 'docs/.vuepress/dist',
   description: pkg.description,
   head: [
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
