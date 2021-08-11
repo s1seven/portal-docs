@@ -106,11 +106,16 @@ dist
 # TernJS port file
 .tern-port
 
-docs/informations
+docs/docs
+docs/information
 docs/environments
 docs/flows
 docs/openapi
 docs/README.md
+# Folder containing previous versions released
+version
+docs/version/
 
 # PlantUML diagram output
 out/
+
