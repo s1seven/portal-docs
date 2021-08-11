@@ -31,7 +31,8 @@ jobs:
           npm ci
           npm run docs:build
 
-      - run: ls docs/.vuepress/dist
+      - run: ls docs/.vuepress
+      - run: ls docs/docs
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
