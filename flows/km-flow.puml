@@ -1,0 +1,32 @@
+@startuml
+title Key Management
+skinparam style strictuml
+participant Customer #FFFFFF
+participant S1Seven_API #FFFFFF
+participant Wallet #FFFFFF
+participant DLT_Node #FFFFFF
+== Create wallet ==
+Customer -> S1Seven_API: Create a wallet for a given company
+S1Seven_API -> Wallet: Create, store in secure storage and return new mnemonic
+S1Seven_API --> S1Seven_API: Create a new wallet entity in DB
+S1Seven_API -> Customer: Return the new mnemonic
+== Create key pair ==
+Customer -> S1Seven_API: Create a new keypair (from a derivation path) to sign transaction with a given wallet
+S1Seven_API -> Wallet: Create a public key
+S1Seven_API --> S1Seven_API: Create a new identity entity with the derivation path and the public key
+S1Seven_API -> Customer: Return the identity
+== Create transactions ==
+Customer -> S1Seven_API: Create a new transaction
+S1Seven_API --> S1Seven_API: Build the transaction
+S1Seven_API -> Customer: Return the transaction to be signed
+== Sign transactions ==
+Customer -> S1Seven_API: Sign a transaction with a specific identity
+S1Seven_API -> Wallet: Sign the content with the private key generated from the identity and return the signed payload
+S1Seven_API --> S1Seven_API: Create an entity to track transaction state with status signed
+S1Seven_API -> Customer: Return the transaction signed
+== Send transactions ==
+Customer -> S1Seven_API: Send a signed transaction
+S1Seven_API -> DLT_Node: Send the transaction to the network matching the coin type and the mode
+S1Seven_API --> S1Seven_API: Update transaction tracker state with status sent
+S1Seven_API -> Customer: Return the transaction signed
+@enduml

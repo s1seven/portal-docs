@@ -10,7 +10,7 @@ on:
 
 env:
   S1SevenDocVersion_PATH: /
-  # CNAME: docs.s1seven.dev
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build-and-deploy:
@@ -25,18 +25,17 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         run: echo S1SevenDocVersion_PATH=/version/$(echo $GITHUB_REF | cut -d / -f 3 | cut -d v -f 2- | cut -d . -f 1,2)/ >> $GITHUB_ENV
 
-      # echo $CNAME >> docs/.vuepress/dist/CNAME
       - name: Install and Build
         run: |
           npm ci
           npm run docs:build
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@4.1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: docs/.vuepress/dist
-          TARGET_FOLDER: ${{ env.S1SevenDocVersion_PATH }}
-          CLEAN: true
-          CLEAN_EXCLUDE: '["version"]'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: docs/.vuepress/dist
+          target-folder: ${{ env.S1SevenDocVersion_PATH }}
+          clean: true
+          clean-exclude: '["version"]'

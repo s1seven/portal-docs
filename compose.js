@@ -15,7 +15,12 @@ const removeDirContent = (dir) => {
   try {
     const files = fs.readdirSync(dir);
     for (const file of files) {
-      fs.unlinkSync(path.join(dir, file));
+      const current = fs.lstatSync(path.join(dir, file));
+      if (current.isDirectory()) {
+        removeDirContent(path.join(dir, file));
+      } else {
+        fs.unlinkSync(path.join(dir, file));
+      }
     }
   } catch (e) {
     if (e.code !== 'ENOENT') {
@@ -48,7 +53,13 @@ const copyDir = (src, dest) => {
 };
 
 (async function () {
-  const folders = ['informations', 'environments', 'flows', 'openapi'];
+  const folders = [
+    { input: 'information', output: `docs/information` },
+    { input: 'environments', output: `docs/environments` },
+    { input: 'flows', output: `docs/flows` },
+    { input: 'openapi', output: `docs/openapi` },
+    { input: 'version' },
+  ];
   const docsPath = './docs';
   const files = [
     { input: 'logo.png', output: `${docsPath}/.vuepress/public/logo.png` },
@@ -63,9 +74,9 @@ const copyDir = (src, dest) => {
   ];
 
   try {
-    folders.map((folder) => {
-      const directory = `${docsPath}/${folder}`;
-      copyDir(folder, directory);
+    folders.map(({ input, output }) => {
+      const directory = `${docsPath}/${output || input}`;
+      copyDir(input, directory);
     });
 
     files.map(({ input, output }) => {
