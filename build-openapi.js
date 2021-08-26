@@ -7,7 +7,18 @@ const { merge } = require('openapi-merge');
 
 // fix schemas merge issues (schemas incremented by suffix)
 function solveMergeConflicts(mergeOutput) {
-  const conflictedSchemas = ['IdentityDto', 'WalletDto', 'TransactionDto', 'AddressDto', 'UserDto', 'CompanyDto'];
+  const conflictedSchemas = [
+    'IdentityDto',
+    'WalletDto',
+    'TransactionDto',
+    'AddressDto',
+    'UserDto',
+    'CompanyDto',
+    'ErrorResponseDto',
+    'NotFoundErrorResponseDto',
+    'UnauthorizedErrorResponseDto',
+    'ForbiddenErrorResponseDto',
+  ];
   const possibleSuffixes = [1, 2, 3];
   const incrementedSchemas = conflictedSchemas
     .map((schema) => possibleSuffixes.map((suffix) => `${schema}${suffix}`))
@@ -47,7 +58,28 @@ async function mergeAPIs(openApis, localFiles) {
     {
       refresh: [],
     },
+    {
+      token: [],
+    },
   ];
+
+  output.components.securitySchemes = {
+    bearer: {
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    },
+    refresh: {
+      type: 'apiKey',
+      in: 'header',
+      name: 'Refresh',
+    },
+    token: {
+      type: 'apiKey',
+      in: 'query',
+      name: 'token',
+    },
+  };
 
   output = solveMergeConflicts(output);
 
@@ -58,7 +90,7 @@ async function mergeAPIs(openApis, localFiles) {
       },
       validate: {
         schema: true,
-        spec: false,
+        spec: true,
       },
     });
     await fs.writeFile(`./openapi.json`, JSON.stringify(openApi, null, 2));
