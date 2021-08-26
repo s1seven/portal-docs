@@ -242,7 +242,7 @@ The access token is restricted to a company resources and a mode.
 
 For applications or scripts that require long term access, an access token key with a one-year time limit can be created by calling the [create accesstoken] operation and setting :
 
-- the companyId in `company` header,
+- the company id in `company` header,
 - the JWT in `authorization` header,
 - the `mode` in the query,
 - an optional `description`,
@@ -318,7 +318,7 @@ For a complete list of available scopes, refer to `CompanyTokenScopesDto` in the
 :::
 
 ::: warning
-The access token (`jwt` property in the response) should be stored safely as it is available for 1 year.
+The access token (`jwt` property in the response) should be stored safely as it will be displayed only once and is available for up to 1 year by default.
 :::
 
 #### Revoke
@@ -328,7 +328,7 @@ A long lived access token can be revoked and its reference deleted from the data
 Those parameters should be provided :
 
 - the JWT in `authorization` header,
-- the companyId in `company` header,
+- the company id in `company` header,
 - the id fron the access token created above
 
 ```sh
