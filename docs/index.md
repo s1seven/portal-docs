@@ -20,7 +20,7 @@ features:
     details: >
       <ul>
         <li><a href="https://github.com/s1seven" target="_blank">Github</a></li>
-        <li><a href="https://s1seven.github.io/SEP/" target="_blank">S1Sseven enhancement proposals</a></li>
+        <li><a href="https://s1seven.github.io/SEP/" target="_blank">S1Seven enhancement proposals</a></li>
         <li><a href="https://s1seven.com" target="_blank">S1Seven website</a></li>
       </ul>
 footer: >
