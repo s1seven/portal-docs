@@ -3,7 +3,7 @@
   "info": {
     "title": "S1Seven API",
     "description": "Microservices bundled APIs",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "contact": {
       "name": "S1Seven development team",
       "url": "https://s1seven.com",
@@ -20047,24 +20047,11 @@
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "object",
-                    "properties": {
-                      "file": {
-                        "description": "Certificate file",
-                        "type": "string",
-                        "format": "binary"
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "file"
-                ]
+                "description": "Certificate (file) to validate",
+                "type": "string",
+                "format": "binary"
               }
             }
           }
@@ -20681,24 +20668,11 @@
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "object",
-                    "properties": {
-                      "file": {
-                        "description": "Certificate file",
-                        "type": "string",
-                        "format": "binary"
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "file"
-                ]
+                "description": "Certificate (file) to notarize",
+                "type": "string",
+                "format": "binary"
               }
             }
           }
@@ -21223,24 +21197,11 @@
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "object",
-                    "properties": {
-                      "file": {
-                        "description": "Certificate file",
-                        "type": "string",
-                        "format": "binary"
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "file"
-                ]
+                "description": "Certificate (file) to notarize",
+                "type": "string",
+                "format": "binary"
               }
             }
           }
@@ -21700,24 +21661,11 @@
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "object",
-                    "properties": {
-                      "file": {
-                        "description": "Certificate file",
-                        "type": "string",
-                        "format": "binary"
-                      }
-                    }
-                  }
-                },
-                "required": [
-                  "file"
-                ]
+                "description": "Certificate (file) to render",
+                "type": "string",
+                "format": "binary"
               }
             }
           }
@@ -29511,8 +29459,7 @@
           "connectionUrl",
           "backedUp",
           "status",
-          "mode",
-          "owner"
+          "mode"
         ]
       },
       "CreateCompanyAddressDto": {
@@ -32243,24 +32190,6 @@
           "algorithm",
           "file",
           "contentType"
-        ]
-      },
-      "CertificateFileDto": {
-        "type": "object",
-        "properties": {
-          "file": {
-            "type": "object",
-            "properties": {
-              "file": {
-                "description": "Certificate file",
-                "type": "string",
-                "format": "binary"
-              }
-            }
-          }
-        },
-        "required": [
-          "file"
         ]
       },
       "NotarizationDto": {
